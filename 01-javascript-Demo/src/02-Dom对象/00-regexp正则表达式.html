@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>正则表达式</title>
+	<script>
+		// 表示字符串中是否包含字母'e'
+		let patt = new RegExp("e");
+		patt = /e/;
+
+		// 表示字符串中，是否包含a或b或c
+		patt = /[abc]/;
+
+		// 表示字符串中，是否包含小写字母。大写字母就是[A-Z]
+		patt = /[a-z]/;
+		// 表示字符串中，是否包含数字
+		patt = /[0-9]/;
+
+		//元字符：
+		// \w 用于查找单词字符：a-z,A-Z,0-9以及下划线，包含_(下划线)字符
+		patt = /\w/;
+
+		// 表示：字符串中是否包含至少3个连续的a
+		patt = /a{3,5}/;
+		// 表示：字符串从头到尾全是a
+		patt = /^a{3,5}$/;
+
+		alert(patt);    // /e/
+		let str = "abcd";
+		alert(patt.test(str));
+	</script>
+</head>
+<body>
+
+</body>
+</html>
