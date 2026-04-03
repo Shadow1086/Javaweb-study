@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		// 传入为参数时
+		$(function () {
+			alert("页面加载完成之后，自动调用");
+			// 传入为HTML字符串时
+			document.getElementById("testDiv").innerHTML = '这是dom对象的属性innerHTML';
+			// $("#testDiv").innerHTML = '这是JQuery对象的属性innerHTML';
+
+			$("#testDiv").click(function(){
+				alert("click()是 jQuery对象的方法")
+			})
+		})
+	</script>
+</head>
+<body>
+<div id="testDiv">Very Good</div>
+<button id="dom">使用DOM对象调用DOM方法</button>
+<button id="dom2">使用DOM对象调用JQuery方法</button>
+
+<button id="jquery">使用JQuery对象调用JQuery方法</button>
+<button id="jquery1">使用JQuery对象调用DOM方法</button>
+
+</body>
+</html>
