@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script>
+		window.onload = function () {
+			// 需求：使用javascript代码创建html标签，并且显示在界面上
+			let htmlDivElement = document.createElement("div");     //在内存中，<div></div>
+			// htmlDivElement.innerHTML = "你好";  // <div>你好</div>，在内存中
+			// 创建一个文本节点对象并且作为div标签的子元素
+			let text = document.createTextNode("你好");
+			htmlDivElement.appendChild(text);
+
+			document.body.appendChild(htmlDivElement);
+		}
+	</script>
+</head>
+<body>
+
+</body>
+</html>
