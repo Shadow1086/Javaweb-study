@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		$(function () {
+			// 将h1标签添加成为div中最后一个子元素
+			$("<h1>appendTo()方法插入</h1>").appendTo("div")
+			// 将h1标签添加到div中第一个子元素
+			$("<h1>prependTo()方法插入</h1>").prependTo($("div"));
+
+			// 将h2标签添加成为div的前一个兄弟元素
+			$("<h2>insertAfter()方法插入</h2>").insertAfter("div")
+			// 将h2标签添加成为div的后一个兄弟元素
+			$("<h2>insertBefore()方法插入</h2>").insertBefore("div")
+
+			// // 将 div 中的全部内容替换成   <h3>replaceWith()方法替换</h3>
+			// $("div").replaceWith( $("<h3>replaceWith()方法替换</h3>") );
+			//
+			// $("<h3>使用replaceAll()方法替换</h3>").replaceAll("div");
+
+
+			// 将整个div删除,边框也会消失
+			$("div").remove();
+
+			// 只是清空div中的内容，div不会消失，所以边框还会在
+			$("div").empty();
+		})
+	</script>
+</head>
+<body>
+<label>
+	多选：
+	<input checked="checked" name="checkbox" type="checkbox" value="checkbox01"/>checkbox1
+	<input name="checkbox" type="checkbox" value="checkbox02"/>checkbox2
+	<br><br>
+</label>
+<div style="border: 1px solid gray">1234</div>
+</body>
+</html>
