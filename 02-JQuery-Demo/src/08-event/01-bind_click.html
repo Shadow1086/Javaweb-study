@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Event Demo</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+			src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script>
+		$(function () {
+			const $panel = $(".panel");
+			const $title = $(".head");
+			const $button = $("#triggerBtn");
+
+			$title.on("click", function () {
+				alert("h5 单击事件：使用 on() 绑定");
+			});
+
+			$title.on("mouseenter mouseleave", function (event) {
+				console.log("当前事件类型：", event.type);
+			});
+
+			$button.on("click", function () {
+				$title.trigger("click");
+			});
+
+			$panel.on("click", ".dynamic-head", function () {
+				console.log("点击了动态新增的标题：", $(this).text());
+			});
+
+			$("<h5 class=\"dynamic-head\">这是动态添加的标题</h5>").appendTo($panel);
+		});
+	</script>
+</head>
+<body>
+<div class="panel">
+	<h5 class="head">什么是 jQuery？</h5>
+	<div class="content">
+		jQuery 是一个经典的 JavaScript 库，老项目里很常见。
+	</div>
+	<button id="triggerBtn">触发标题点击事件</button>
+</div>
+</body>
+</html>
