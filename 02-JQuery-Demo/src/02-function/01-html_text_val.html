@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		$(function () {
+			// 不传参数是获取，传入参数是设置
+			$("div").html();
+
+			$("button").click(function () {
+				alert($("#username").val("超级程序员"))  //设置值
+			})
+		});
+	</script>
+</head>
+<body>
+<div>我是div <span>我是div中的span</span></div>
+<label><input id="username" name="username" type="text">
+	<button>操作输入框</button>
+</label>
+
+</body>
+</html>
