@@ -3,4 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+	<servlet>
+		<servlet-name>servlet1</servlet-name>
+		<servlet-class>com.study.Servlet1</servlet-class>
+
+		<!--	配置servlet的初始参数	-->
+		<init-param>
+			<param-name>keya</param-name>
+			<param-value>valueA</param-value>
+		</init-param>
+		<init-param>
+			<param-name>keyB</param-name>
+			<param-value>valueB</param-value>
+		</init-param>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>servlet1</servlet-name>
+		<url-pattern>/servlet1</url-pattern>
+	</servlet-mapping>
 </web-app>
