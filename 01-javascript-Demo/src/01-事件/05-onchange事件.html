@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script>
+		function onchangeFunc() {
+			alert("静态注册onchange事件---居住地更改")
+		}
+
+		window.onload = function () {
+			//1. 获取标签对象
+			let element = document.getElementById("province");
+			// 2. 通过标签.事件名 = function(){}
+			element.onchange = function () {
+				alert("onchange的动态注册方法---居住地更改");
+			}
+		}
+	</script>
+</head>
+<body>
+<div>
+	请选择你所居住的城市：
+	<label>
+		<select onchange="onchangeFunc()">
+			<option>北京</option>
+			<option>上海</option>
+			<option>广州</option>
+			<option>深圳</option>
+			<option>保定</option>
+		</select>
+		请选择你居住的省份
+		<select id="province">
+			<option>河北</option>
+			<option>广西</option>
+			<option>河南</option>
+			<option>内蒙古</option>
+			<option>福建</option>
+		</select>
+	</label>
+</div>
+
+</body>
+</html>
