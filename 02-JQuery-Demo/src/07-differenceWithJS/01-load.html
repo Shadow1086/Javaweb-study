@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script
+	  src="https://code.jquery.com/jquery-4.0.0.js"
+	  integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+	  crossorigin="anonymous"></script>
+
+	<script>
+		window.onload = function (){
+			alert("原生js页面加载完成之后")
+		}
+		$(function (){
+			alert("jquery页面加载完成之后")
+		})
+	</script>
+</head>
+<body>
+<button>我是按钮</button>
+<iframe src="http://localhost:8080"></iframe>
+</body>
+</html>
