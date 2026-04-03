@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script>
+		function selectAll() {
+			// document.getElementsByTagName("")： 按照指定标签名来进行查询并返回集合
+			let eles = document.getElementsByTagName("input");
+			for(let i = 0;i<eles.length;i++){
+				eles[i].checked = true;
+			}
+		}
+
+	</script>
+</head>
+<body>
+<label>兴趣爱好：
+	<input type="checkbox" value="cpp"/>cpp
+	<input type="checkbox" value="java"/>java
+	<input type="checkbox" value="python"/>python
+	<br>
+</label>
+<button onclick="selectAll()">全选</button>
+</body>
+</html>
