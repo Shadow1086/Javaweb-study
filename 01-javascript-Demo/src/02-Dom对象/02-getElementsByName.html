@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script>
+		function selectAll() {
+			// 让所有复选框都选中
+			//  document.getElementsByName()是根据指定的name属性返回的多个标签对象集合
+			// 集合中每个元素都是dom对象
+			let eles = document.getElementsByName("hobby");
+			for (let i = 0; i < eles.length; i++) {
+				// checkbox 中的checked表示复选框的选中状态，如果选中为true，不选中为false
+				eles[i].checked = true;
+			}
+		}
+
+		function selectNone() {
+			let eles = document.getElementsByName("hobby");
+			for (let i = 0; i < eles.length; i++) {
+				eles[i].checked = false;
+			}
+		}
+
+		function selectReverse() {
+			let eles = document.getElementsByName("hobby");
+			for (let i = 0; i < eles.length; i++) {
+				eles[i].checked = !eles[i].checked;
+			}
+		}
+	</script>
+</head>
+<body>
+<label>兴趣爱好：
+	<input name="hobby" type="checkbox" value="cpp"/>cpp
+	<input name="hobby" type="checkbox" value="java"/>java
+	<input name="hobby" type="checkbox" value="python"/>python
+	<br>
+</label>
+<button onclick="selectAll()">全选</button>
+<button onclick="selectNone()">全不选</button>
+<button onclick="selectReverse()">反选</button>
+</body>
+</html>
