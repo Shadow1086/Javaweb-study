@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script>
+		<!--	静态注册onblur事件	-->
+		function onblurFunc() {
+			alert("静态注册失去焦点事件")
+		}
+
+		window.onload = function () {
+			//1. 获取标签对象
+			let pwd = document.getElementById("password");
+			// 2. 通过标签对象.事件名 = function(){};
+			pwd.onblur = function () {
+				alert("动态注册失去焦点事件");
+			}
+		}
+	</script>
+</head>
+<body>
+用户名：<input onblur="onblurFunc()" type="text"><br>
+密码：<input id="password" type="text">
+</body>
+</html>
