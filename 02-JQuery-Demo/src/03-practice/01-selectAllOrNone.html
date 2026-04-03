@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		$(function () {
+			// 全选按钮
+			$(":button:first").click(function () {
+				$(":input").prop("checked", true);
+			})
+			// 全不选按钮
+			$(":button:eq(1)").click(function () {
+				$(":input").prop("checked", false);
+			})
+			// 反选按钮
+			$(":button:eq(2)").click(function () {
+				let $checkbox = $(":checkbox[name='items']");
+				$checkbox.each(function () {
+					// 在each遍历的function函数中，有一个this对象，是当前遍历到的dom对象
+					this.checked = !this.checked;
+				})
+				// 检查是否全选/全不选
+				// 获取全部的球类个数，在获取选中的球类个数
+				if($checkbox.length === $(":checkbox[name='items']:checked").length ){
+					$("#checkedAllBox").prop("checked",true);
+				}else{
+					$("#checkedAllBox").prop("checked",false);
+				}
+			})
+			// 提交
+			$(":button:last").click(function (){
+				$(":input[name='items']").each(function (){
+					if(this.checked===true){
+						alert(this.value);
+					}
+				})
+			})
+
+			// 全选/全不选 的单选框
+			$("#checkedAllBox").click(function (){
+				// 在事件的function汗书中，有一个this对象，这个this对象是当前正在响应事件的dom对象
+				$(":checkbox[name='items']").prop("checked",this.checked);
+			})
+			// 给全部球类绑定单击事件
+			$(":checkbox[name='items']").click(function (){
+				let allCheckLength = $(":checkbox[name='items']").length;
+				let selectLength = $(":checkbox[name='items']:checked").length;
+				$("#checkedAllBox").prop("checked",allCheckLength===selectLength);
+			})
+		})
+	</script>
+</head>
+<body>
+<label>
+	你爱好的运动是?
+	<input id="checkedAllBox" type="checkbox">全选/全不选
+</label>
+<br>
+<input name="items" type="checkbox" value="足球">足球
+<input name="items" type="checkbox" value="篮球">篮球
+<input name="items" type="checkbox" value="乒乓球">乒乓球
+<input name="items" type="checkbox" value="羽毛球">羽毛球
+<br>
+<button>全选</button>
+<button>全不选</button>
+<button>反选</button>
+<button>提交</button>
+</body>
+</html>
