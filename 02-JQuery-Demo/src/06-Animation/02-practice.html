@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 12px 0 24px;
+            font-family: "Microsoft YaHei", "SimSun", sans-serif;
+            background-color: #ffffff;
+            color: #2e5fa7;
+        }
+
+        .brand-wrapper {
+            width: 780px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .brand-list {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin: 0;
+            padding: 0 8px;
+            list-style: none;
+        }
+
+        .brand-list li {
+            width: 30%;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .brand-list a {
+            color: #2e5fa7;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .brand-list a:hover {
+            text-decoration: underline;
+        }
+
+        .brand-list em {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .extra-brand {
+            display: none;
+        }
+
+        .toggle-box {
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        #toggleBrandBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 205px;
+            height: 44px;
+            border: 1px solid #b7b7b7;
+            background-color: #ffffff;
+            color: #3a67ae;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #e2a455;
+            border-radius: 2px;
+            color: #d58b2d;
+            font-size: 12px;
+            line-height: 1;
+        }
+	</style>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		$(function () {
+			// 基本初始状态
+			$("li:gt(5):not(:last)").hide();
+			// 给功能按钮绑定单击事件
+			$("#toggleBrandBtn").click(function () {
+				let $li = $("li:gt(5):not(:last)");
+				// 让某些品牌显示/隐藏
+				$li.toggle();
+				// 按钮上的文字：1.显示全部品牌 角标向下/2. 显示精简品牌，角标向上
+				if ($li.is(":hidden")) {
+					$(".btn-icon").text("▼");
+					$("#toggleBrandText").text("显示全部品牌")
+				} else {
+					$(".btn-icon").text("▲");
+					$("#toggleBrandText").text("显示精简品牌")
+				}
+
+				return false;
+			})
+		})
+	</script>
+</head>
+<body>
+<div class="brand-wrapper">
+	<ul class="brand-list" id="brandList">
+		<li><a href="javascript:">佳能<em>(30440)</em></a></li>
+		<li><a href="javascript:">索尼<em>(27220)</em></a></li>
+		<li><a href="javascript:">三星<em>(20808)</em></a></li>
+		<li><a href="javascript:">尼康<em>(17821)</em></a></li>
+		<li><a href="javascript:">松下<em>(12289)</em></a></li>
+		<li><a href="javascript:">卡西欧<em>(8242)</em></a></li>
+		<li><a href="javascript:">富士<em>(14894)</em></a></li>
+		<li><a href="javascript:">柯达<em>(9520)</em></a></li>
+		<li><a href="javascript:">宾得<em>(2195)</em></a></li>
+		<li><a href="javascript:">理光<em>(4114)</em></a></li>
+		<li><a href="javascript:">奥林巴斯<em>(12205)</em></a></li>
+		<li><a href="javascript:">明基<em>(1466)</em></a></li>
+		<li><a href="javascript:">爱国者<em>(3091)</em></a></li>
+		<li><a href="javascript:">其它品牌相机<em>(7275)</em></a></li>
+	</ul>
+
+	<div class="toggle-box">
+		<button id="toggleBrandBtn" type="button">
+			<span class="btn-icon">▼</span>
+			<span id="toggleBrandText">显示全部品牌</span>
+		</button>
+	</div>
+</div>
+</body>
+</html>
