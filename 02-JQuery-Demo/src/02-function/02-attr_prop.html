@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script
+			src="https://code.jquery.com/jquery-4.0.0.js"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			crossorigin="anonymous"></script>
+	<script>
+		$(function (){
+			// 传入一个参数是获取值，传入两个参数是设置值
+			$(":checkbox:first").attr("name");  // 获取name的值
+
+			$(":checkbox:first").attr("name","abc");  // 设置name的值
+			alert($(":checkbox").attr("checked"));      // 设置属性了的就是属性值
+			alert($("checkbox02").attr("checked"));     // 未设置属性是undefined，官方觉得返回undefined是一个错误
+			alert($("checkbox02").prop("checked"));     // 使用prop()就可以避免上方的错误，返回false
+
+			$(":checkbox:first").attr("abc","abcValue");
+		})
+	</script>
+</head>
+<body>
+<label>
+	多选：
+	<input name="checkbox" type="checkbox" checked="checked" value="checkbox01"/>checkbox1
+	<input name="checkbox" type="checkbox" value="checkbox02"/>checkbox2
+</label>
+</body>
+</html>
