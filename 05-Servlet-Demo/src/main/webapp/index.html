@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<!--
+Get方式：
+http://localhost:8080/demo05/userServlet?username=zhangsan
+Post方式：
+请求体中：
+username=zhangsan
+-->
+<form action="userServlet" method="post">
+	<label>用户名：<input name="username" type="text"><br></label>
+	<input type="submit" value="校验">
+</form>
+</body>
+</html>
