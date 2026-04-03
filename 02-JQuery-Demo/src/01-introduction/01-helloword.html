@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		// // 使用javascript和dom对象方式
+		// window.onload = function (){
+		// let btnObj = document.getElementById("btnId");
+		// btnObj.onclick=function (){
+		// alert("js原生的单击事件");
+		// }
+		// }
+		// 表示页面加载完成之后，相当于window.onload
+		$(function(){
+			let $btnObj = $("#btnId");
+			// 绑定单击事件
+			$btnObj.click(function(){
+				alert("JQuery单击事件");
+			})
+		})
+	</script>
+</head>
+<body>
+<button id="btnId">hello world</button>
+</body>
+</html>
