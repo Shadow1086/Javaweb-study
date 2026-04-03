@@ -30,6 +30,10 @@ public class UserServlet extends HttpServlet {
 			info = "NO";
 		}
 		// 3. 将要响应的数据放到response中
+		// 应该设置Content-type响应头,如果设置错了，浏览器就不会识别相应的格式
+		// 方法：setHeader("Content-Type","Value")/setContentType("Value");
+		response.setHeader("Content-Type","text/html");
+		response.setContentType("text/html");
 		PrintWriter writer = response.getWriter();//该方法返回的是一个向相应体中打印字符串的打印流
 		writer.write(info);
 
