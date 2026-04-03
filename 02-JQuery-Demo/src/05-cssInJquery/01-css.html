@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+        div {
+            width: 100px;
+            height: 260px;
+        }
+
+        button {
+            width: 150px;
+            margin-top: 5px;
+        }
+
+        div.whiteborder {
+            border: 2px white solid;
+        }
+
+        div.reDiv {
+            background-color: red;
+        }
+
+        div.blueBorder {
+            border: 5px solid blue;
+        }
+	</style>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		$(function () {
+			let $divEle = $('div:first');
+
+			$('#btn01').click(function () {
+				// assClass - 向被选中的元素添加一个或者多个样式,使用空格隔开
+				$divEle.addClass('reDiv blueBorder');
+
+			})
+			$('#btn02').click(function () {
+				// removeClass - 从被选中的元素删除一个或者多个类
+				$divEle.removeClass('reDiv blueBorder')
+			})
+			$('#btn03').click(function () {
+				// toggleClass - 对被选中元素进行添加/ 删除类的切换操作
+				$divEle.toggleClass('reDiv')
+			})
+			$('#btn04').click(function () {
+				// offset() - 返回第一个匹配元素相对于文档的位置
+				let offset = $divEle.offset();
+				alert(offset);        // 获取元素的top,left的位置
+
+				// 设置元素的位置
+				$divEle.offset({
+					top: 20,
+					left: 50
+				})
+			})
+		})
+	</script>
+</head>
+<body>
+<table>
+	<tr>
+		<td>
+			<div class="border">
+
+			</div>
+		</td>
+		<td>
+			<div class="btn">
+				<button id="btn01" value="addClass()">addClass</button>
+				<button id="btn02" value="removeClass()">removeClass</button>
+				<button id="btn03" value="toggleClass()">toggleClass</button>
+				<button id="btn04" value="offset()">offset</button>
+			</div>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
