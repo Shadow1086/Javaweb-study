@@ -8,31 +8,28 @@
 			servlet-class   :告诉tomcat对应的要实例化的Servlet类
 			servlet-name    :用于关联请求的映射路径
 	-->
-	<servlet>
-		<servlet-name>userServlet</servlet-name>
-		<servlet-class>com.study.servlet.UserServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>userServlet</servlet-name>
-		<url-pattern>/userServlet</url-pattern>
-	</servlet-mapping>
+<!--	<servlet>-->
+<!--		<servlet-name>userServlet</servlet-name>-->
+<!--		<servlet-class>com.study.servlet.UserServlet</servlet-class>-->
+<!--	</servlet>-->
+<!--	<servlet-mapping>-->
+<!--		<servlet-name>userServlet</servlet-name>-->
+<!--		<url-pattern>/userServlet</url-pattern>-->
+<!--	</servlet-mapping>-->
 
-<!--
-	一个servlet-name可以同时对应多个url-pattern
-	但是一个url-pattern只能对应一个servlet-name
-
-	一个servlet标签可以同时对应多个servlet-mapping标签
-
-
-	url-pattern精确匹配和模糊匹配
--->
-	<servlet>
-		<servlet-name>servlet1</servlet-name>
-		<servlet-class>com.study.servlet.Servlet01</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>servlet1</servlet-name>
-		<url-pattern>/s1</url-pattern>
-		<url-pattern>/servlet1</url-pattern>
-	</servlet-mapping>
+<!--&lt;!&ndash;-->
+<!--	一个servlet-name可以同时对应多个url-pattern-->
+<!--	但是一个url-pattern只能对应一个servlet-name-->
+<!--	一个servlet标签可以同时对应多个servlet-mapping标签-->
+<!--	url-pattern精确匹配和模糊匹配-->
+<!--&ndash;&gt;-->
+<!--	<servlet>-->
+<!--		<servlet-name>servlet1</servlet-name>-->
+<!--		<servlet-class>com.study.servlet.Servlet01</servlet-class>-->
+<!--	</servlet>-->
+<!--	<servlet-mapping>-->
+<!--		<servlet-name>servlet1</servlet-name>-->
+<!--&lt;!&ndash;		<url-pattern>/s1</url-pattern>&ndash;&gt;-->
+<!--		<url-pattern>/servlet1</url-pattern>-->
+<!--	</servlet-mapping>-->
 </web-app>
