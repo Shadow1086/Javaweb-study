@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>从左侧面板选项添加到右侧面板</title>
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+			src="https://code.jquery.com/jquery-4.0.0.js"></script>
+	<script>
+		$(function () {
+			// 左边的'选中添加到右边'按钮事件
+			$("button:eq(0)").click(function () {
+				$("select:eq(0) option:selected").appendTo($("select:eq(1)"));
+			})
+			// 左边的'全部添加到右边'按钮事件
+			$(".panelLeft :button:last").click(function () {
+				$("select:eq(0) option").appendTo($("select:eq(1)"));
+			})
+
+			// 右边的'选中删除到左边'按钮事件
+			$(".panelRight :button:first").click(function () {
+				$("select:eq(1) option:selected").appendTo($("select:eq(0)"));
+			})
+			// 右边的'全部删除到左边'按钮事件
+			$(".panelRight :button:last").click(function () {
+				$("select:eq(1) option").appendTo($("select:eq(0)"))
+			})
+
+		})
+	</script>
+	<style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 30px;
+            font-family: "Microsoft YaHei", "SimSun", sans-serif;
+            font-size: 14px;
+            color: #333333;
+            background-color: #ffffff;
+        }
+
+        .transfer-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 48px;
+        }
+
+        .panelLeft,
+        .panelRight {
+            width: 180px;
+            text-align: center;
+        }
+
+        .panelLeft select,
+        .panelRight select {
+            width: 180px;
+            height: 230px;
+            border: 1px solid #bfbfbf;
+            background-color: #ffffff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .panelLeft select option,
+        .panelRight select option {
+            padding: 4px 8px;
+        }
+
+        .btn-group {
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .btn-group button {
+            width: 150px;
+            height: 36px;
+            margin: 0 auto;
+            border: 1px solid #999999;
+            border-radius: 5px;
+            background: linear-gradient(to bottom, #ffffff, #e9e9e9);
+            color: #222222;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-group button:active {
+            background: linear-gradient(to bottom, #e2e2e2, #f8f8f8);
+        }
+	</style>
+</head>
+<body>
+<div class="transfer-box">
+	<div class="panelLeft">
+		<select id="leftList" multiple>
+			<option value="1">选项1</option>
+			<option value="2">选项2</option>
+			<option value="3">选项3</option>
+			<option value="4">选项4</option>
+			<option value="5">选项5</option>
+			<option value="6">选项6</option>
+			<option value="7">选项7</option>
+			<option value="8">选项8</option>
+			<option value="9">选项9</option>
+			<option value="10">选项10</option>
+		</select>
+
+		<div class="btn-group">
+			<button id="addSelected" type="button">选中添加到右边</button>
+			<button id="addAll" type="button">全部添加到右边</button>
+		</div>
+	</div>
+
+	<div class="panelRight">
+		<select id="rightList" multiple>
+
+		</select>
+
+		<div class="btn-group">
+			<button id="removeSelected" type="button">选中删除到左边</button>
+			<button id="removeAll" type="button">全部删除到左边</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>
