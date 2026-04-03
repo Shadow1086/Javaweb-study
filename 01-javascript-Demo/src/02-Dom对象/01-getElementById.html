@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<script>
+		/*
+		* 当用户点击率校验按钮，要获取输入框中的内容，并且验证其是否合法
+		* 验证的规则是：必须由字母，数字，下划线组成，并且长度是5~12位
+		* */
+		function onclickFunc() {
+			let element = document.getElementById("checkUserName");
+			console.log("type = " + element.type);
+			console.log("value = " + element.value);
+			console.log("id = " + element.id);
+			console.log("起始标签到结束标签的内容：" + element.innerHTML);
+
+			let username = element.value;
+			// 正则表达式
+			let patt = /^\w{5,12}$/;
+			// test()方法用于测试某个字符串是不是匹配正则表达式
+			//      匹配返回true,不匹配返回false;
+			let illegal = document.getElementById("usernameIllegal");
+			if (patt.test(username)) {
+				console.log("用户名合法");
+				illegal.innerHTML = "";
+				// 如果说有图片信息，就直接illegal.innerHTML = "<img src="#">"
+			} else {
+				console.log("用户名不合法");
+				// illegal.write("用户名不合法")
+				illegal.innerHTML = "用户名不合法";
+			}
+		}
+	</script>
+</head>
+<body>
+<label>用户名：<input id="checkUserName" type="text"></label>
+<span id="usernameIllegal" style="color:red;"></span><br>
+<button onclick="onclickFunc()">校验</button>
+</body>
+</html>
