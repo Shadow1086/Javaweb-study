@@ -2169,6 +2169,12 @@ public class Servlet3 extends HttpServlet {
 
 ```
 
+## HttpServletRequest
+
+- HttpServletRequest 是一个接口，其父接口是ServletRequest
+- Tomcat将请求报文转成封装而来的对象，在Tomcat调用service方法时传入
+- HttpServletRequest代表客户端发来的请求，所有请求中的信息都可以通过该对象获得
+
 ## 6.4 Servlet 请求的分发处理
 
 - 根据请求的类型：POST/GET，执行不同的功能方法
