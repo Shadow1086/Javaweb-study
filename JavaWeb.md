@@ -2102,6 +2102,31 @@ public class Servlet1 extends HttpServlet {
 
 ```
 
+### ServletContext 常用API
+
+- 获取文件路径：getRealPath()
+- 获取项目部署的上下文路径：getContextPath()
+
+```java
+@WebServlet("/servlet3")
+public class Servlet3 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ServletContext servletContext = getServletContext();
+
+		// 向upload目录中写入一个文件
+		// 1. getRealPath()：获得一个只想项目部署位置下的某个文件/目录的磁盘真是路径的API
+		String path = servletContext.getRealPath("upload");
+		System.out.println(path);
+
+		// 2.获取项目部署的上下文路径，即项目的访问路径
+		// 后续我们会学习在项目中使用相对和绝对路径赵目标资源
+		// getContextPath()：获取项目的上下文路径，项目的访问路径
+		String contextPath = servletContext.getContextPath();
+		System.out.println(contextPath);
+	}
+}
+```
 
 ## 6.4 Servlet 请求的分发处理
 
