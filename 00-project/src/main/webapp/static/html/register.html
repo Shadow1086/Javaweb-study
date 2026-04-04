@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<link href="../css/register.css" rel="stylesheet">
+	<script
+	  src="https://code.jquery.com/jquery-4.0.0.js"
+	  integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U="
+	  crossorigin="anonymous"></script>
+	<script>
+		$(function () {
+			// 检验用户名格式是否合法
+			$("#username").on("blur", function () {
+				let pattern = /^[0-9A-Za-z]{5,10}$/;
+				$("#msg-username").text(pattern.test($(this).val()) ? "YES" : "NO")
+			})
+			// 检验用户密码是否合法
+			$("#user-pwd").on("blur",function () {
+				let pattern = /^(?=.*_)[0-9A-Za-z]{5,10}$/;
+				if (!pattern.test($(this).val())) {
+					$("#msg-pwd").text("NO");
+				} else {
+					$("#msg-pwd").text("YES");
+				}
+			})
+			$("#user-conpwd").on("blur",function () {
+				let pattern = /^(?=.*_)[0-9A-Za-z]{5,10}$/;
+				if (!pattern.test($(this).val())) {
+					$("#msg-conpwd").text("NO");
+				} else {
+					$("#msg-conpwd").text("YES");
+				}
+			})
+		})
+	</script>
+</head>
+<body>
+<div class="container">
+	<div class="content">
+		<div class="welcome">
+			<h1>欢迎来到长空日志管理</h1>
+			<h2>请注册</h2>
+		</div>
+		<div class="register-form">
+			<div class="submit-form">
+				<label for="username">请输入账号：</label><input id="username" name="username" type="text"><span id="msg-username"></span>
+				<label for="user-pwd">请输入密码：</label><input id="user-pwd" name="user-pwd" type="password"><span id="msg-pwd"></span>
+				<label for="user-conpwd">请确认密码：</label><input id="user-conpwd" name="user-conpwd" type="password"><span id="msg-conpwd"></span>
+			</div>
+			<hr>
+			<button>确认</button>
+		</div>
+	</div>
+</div>
+</body>
+</html>

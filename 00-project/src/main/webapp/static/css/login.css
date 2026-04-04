@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 50px;
+}
+h2 {
+    font-size: 35px;
+}
+button {
+    width: 80px;
+    height: 30px;
+    border-radius: 6px;
+}
+input {
+    height: 20px;
+    width: 200px;
+}
+
+.container {
+    width: 1690px;
+    height: 960px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content , .welcome, .submit ,.login-form  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.content {
+    width: 680px;
+    height: 410px;
+    background-color: skyblue;
+    border-radius: 8px;
+    transform: translateY(-80px);
+}
+.login-form {
+gap: 10px;
+}
+.submit {
+    gap: 0;
+}
+.submit label {
+    display: flex;
+    justify-content: center;
+    width: 420px;
+}
+.submit span {
+    font-size: 10px;
+    width: 30px;
+}
+.btnlist {
+    gap: 10px;
+}
+.submit label {
+    padding: 3px;
+}
+
