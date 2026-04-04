@@ -1984,24 +1984,25 @@ public class ReportServlet extends HttpServlet {
         - void destory()：将抽象方法，重写为普通方法，在方法内部没有任何的实现代码，这种方法叫做：**平庸实现**
             - 平庸方法好处：该类的子类就不需要必须重写该方法了
         - void init(ServletConfig config)：tomcat在调用init方法时，会读取配置信息进入一个ServletConfig对象，并将该对象传入init方法。
-          - this.config = config; ：将config对象存储为当前的属性，就是GenericServlet的属性ServletConfig
-          - this.init();：调用重载的无参init()方法
-        - public void init()：重载的无参初始化方法，我们重写的就是这个方法，通过重写这个无参的初始方法，我们可以省略需要处理的config对象，由上面有参的init()方法处理即可
+            - this.config = config; ：将config对象存储为当前的属性，就是GenericServlet的属性ServletConfig
+            - this.init();：调用重载的无参init()方法
+        - public void init()
+          ：重载的无参初始化方法，我们重写的就是这个方法，通过重写这个无参的初始方法，我们可以省略需要处理的config对象，由上面有参的init()
+          方法处理即可
         - ServletConfig getServletConfig(){return this.config}：返回ServletConfig方法
         - abstract void service(ServletRequest req, ServletResponse res)：再次抽象声明service方法。
 - HttpServlet抽象类
-  - 主要关注service方法的实现：
-  - public void service(ServletRequest req, ServletResponse res)：
-    - 进行了一个参数的父转子，将ServletRequest父接口转换成HttpServletRequest子接口，让可以使用的API更加丰富
-    - 在调用重载的service()方法
-  - protected void service(HttpServletRequest req, HttpServletResponse resp)：重载的service方法：
-    - String method = req.getMethod()：获取请求的方式：GET/POST/PUT/DELETE/OPTIONS...
-    - 根据请求方式，调用对应的do方法：get->doGet(),post->doPost(),put->doPut()...
-  - doGet()方法：
-    - String protocol = req.getProtocol(); /String msg = lStrings.getString("http.method_get_not_supported");   
-      - 获取状态码和信息字符串
-    -  通过resp.sendError(getMethodNotSupportedCode(protocol), msg)方法，故意响应异常状态码
-
+    - 主要关注service方法的实现：
+    - public void service(ServletRequest req, ServletResponse res)：
+        - 进行了一个参数的父转子，将ServletRequest父接口转换成HttpServletRequest子接口，让可以使用的API更加丰富
+        - 在调用重载的service()方法
+    - protected void service(HttpServletRequest req, HttpServletResponse resp)：重载的service方法：
+        - String method = req.getMethod()：获取请求的方式：GET/POST/PUT/DELETE/OPTIONS...
+        - 根据请求方式，调用对应的do方法：get->doGet(),post->doPost(),put->doPut()...
+    - doGet()方法：
+        - String protocol = req.getProtocol(); /String msg = lStrings.getString("http.method_get_not_supported");
+            - 获取状态码和信息字符串
+        - 通过resp.sendError(getMethodNotSupportedCode(protocol), msg)方法，故意响应异常状态码
 
 ![](https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/03/20-06-js2MCO)
 
@@ -2012,10 +2013,10 @@ public class ReportServlet extends HttpServlet {
 - 方法一：在web.xml中通过使用servlet 的子标签：`init-param`标签，可以设置servletConfig的初始化配置，就会生成一个ServletConfig的对象
 - 方法二：通过注解：`@WebServlet(initParams={@WebInitParam(name="encoding",value="UTF-8")})`
 - 在HttpServlet中，ServletConfig属性就是这个对象(通过init方法的this.config = config)
-  - 方法：
-    - getInitParameter("value")：获取value对应的值，其中value是键名
-    - hasMoreElement()：判断有没有下一个参数，如果有返回true,如果没有返回false
-    - nextElement()：取出下一个元素，向下移动游标(指针)
+    - 方法：
+        - getInitParameter("value")：获取value对应的值，其中value是键名
+        - hasMoreElement()：判断有没有下一个参数，如果有返回true,如果没有返回false
+        - nextElement()：取出下一个元素，向下移动游标(指针)
 - 注意：每个servlet都有自己的ServletConfig对象，比如Servlet1创建的Config对象，Servlet2使用不了
 
 ### ServletContext
@@ -2024,11 +2025,11 @@ public class ReportServlet extends HttpServlet {
 - ServletContext对象为所有的Servlet所共享,并且可以为所有的Servlet提供初始配置参数
 - 内存上的差异：config是多例的，而context是单例的
 
-
 两者用法示例(基本上是一样的)：
 
 ```xml
-<web-app >
+
+<web-app>
 	<!-- 配置context上下文	-->
 	<context-param>
 		<param-name>encoding</param-name>
@@ -2040,18 +2041,18 @@ public class ReportServlet extends HttpServlet {
 	</context-param>
 
 	<servlet>
-		<servlet-name>servlet1</servlet-name>
-		<servlet-class>com.study.Servlet1</servlet-class>
+	<servlet-name>servlet1</servlet-name>
+	<servlet-class>com.study.Servlet1</servlet-class>
 
-		<!--	配置servlet的初始参数	-->
-		<init-param>
-			<param-name>keya</param-name>
-			<param-value>valueA</param-value>
-		</init-param>
-		<init-param>
-			<param-name>keyB</param-name>
-			<param-value>valueB</param-value>
-		</init-param>
+	<!--	配置servlet的初始参数	-->
+	<init-param>
+		<param-name>keya</param-name>
+		<param-value>valueA</param-value>
+	</init-param>
+	<init-param>
+		<param-name>keyB</param-name>
+		<param-value>valueB</param-value>
+	</init-param>
 
 </web-app>
 ```
@@ -2108,6 +2109,7 @@ public class Servlet1 extends HttpServlet {
 - 获取项目部署的上下文路径：getContextPath()
 
 ```java
+
 @WebServlet("/servlet3")
 public class Servlet3 extends HttpServlet {
 	@Override
@@ -2130,39 +2132,42 @@ public class Servlet3 extends HttpServlet {
 
 ## 域对象的相关API
 
- - 域对象：一些用于存储数据和传递数据的对象，传递数据不同的方位，我们称之为不同的域，不用的域对想代表不同的域，共享数据的范围也不同
- - Webapp中的三大域对象：应用域，会话域，请求域
- - 应用域：ServletContext代表应用，ServletContext域代表应用域，是webapp中最大的域，可以在本应用内实现数据的共享和传递
+- 域对象：一些用于存储数据和传递数据的对象，传递数据不同的方位，我们称之为不同的域，不用的域对想代表不同的域，共享数据的范围也不同
+- Webapp中的三大域对象：应用域，会话域，请求域
+- 应用域：ServletContext代表应用，ServletContext域代表应用域，是webapp中最大的域，可以在本应用内实现数据的共享和传递
 
-| API                                         | 功能解释            |
-| ------------------------------------------- | ------------------- |
+| API                                         | 功能解释       |
+|---------------------------------------------|------------|
 | void setAttribute(String key,Object value); | 向域中存储/修改数据 |
-| Object getAttribute(String key);            | 获得域中的数据      |
-| void removeAttribute(String key);           | 移除域中的数据      |
+| Object getAttribute(String key);            | 获得域中的数据    |
+| void removeAttribute(String key);           | 移除域中的数据    |
 
 示例：
+
 ```java
+
 @WebServlet("/scope")
 public class ContextScope extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 作为域对象，一定会有的API
 		ServletContext servletContext = getServletContext();
-		servletContext.setAttribute("keya","valuea");           // 存储数据
-		servletContext.setAttribute("keya","valueaaa");         // 修改数据：替换掉上面的valuea这个值
+		servletContext.setAttribute("keya", "valuea");           // 存储数据
+		servletContext.setAttribute("keya", "valueaaa");         // 修改数据：替换掉上面的valuea这个值
 
 		Object keya = servletContext.getAttribute("keya");// 获取数据
 
 		servletContext.removeAttribute("keya");
 	}
 }
+
 // 读取域对象的数据
 @WebServlet("/servlet3")
 public class Servlet3 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 从域对象中读取数据
-		String keya = (String)servletContext.getAttribute("keya");
+		String keya = (String) servletContext.getAttribute("keya");
 		System.out.println(keya);
 	}
 }
@@ -2175,6 +2180,106 @@ public class Servlet3 extends HttpServlet {
 - Tomcat将请求报文转成封装而来的对象，在Tomcat调用service方法时传入
 - HttpServletRequest代表客户端发来的请求，所有请求中的信息都可以通过该对象获得
 
++ 获取请求行信息相关(方式,请求的url,协议及版本)
+
+| API                           | 功能解释            |
+|-------------------------------|-----------------|
+| StringBuffer getRequestURL(); | 获取客户端请求的url     |
+| String getRequestURI();       | 获取客户端请求项目中的具体资源 |
+| int getServerPort();          | 获取客户端发送请求时的端口   |
+| int getLocalPort();           | 获取本应用在所在容器的端口   |
+| int getRemotePort();          | 获取客户端程序的端口      |
+| String getScheme();           | 获取请求协议          |
+| String getProtocol();         | 获取请求协议及版本号      |
+| String getMethod();           | 获取请求方式          |
+
++ 获得请求头信息相关
+
+| API                                   | 功能解释              |
+|---------------------------------------|-------------------|
+| String getHeader(String headerName);  | 根据头名称获取请求头        |
+| Enumeration<String> getHeaderNames(); | 获取所有的请求头名字        |
+| String getContentType();              | 获取content-type请求头 |
+
++ 获得请求参数相关
+
+| API                                                     | 功能解释               |
+|---------------------------------------------------------|--------------------|
+| String getParameter(String parameterName);              | 根据请求参数名获取请求单个参数值   |
+| String[] getParameterValues(String parameterName);      | 根据请求参数名获取请求多个参数值数组 |
+| Enumeration<String> getParameterNames();                | 获取所有请求参数名          |
+| Map<String, String[]> getParameterMap();                | 获取所有请求参数的键值对集合     |
+| BufferedReader getReader() throws IOException;          | 获取读取请求体的字符输入流      |
+| ServletInputStream getInputStream() throws IOException; | 获取读取请求体的字节输入流      |
+| int getContentLength();                                 | 获得请求体长度的字节数        |
+
++ 其他API
+
+| API                                          | 功能解释               |
+|----------------------------------------------|--------------------|
+| String getServletPath();                     | 获取请求的Servlet的映射路径  |
+| ServletContext getServletContext();          | 获取ServletContext对象 |
+| Cookie[] getCookies();                       | 获取请求中的所有cookie     |
+| HttpSession getSession();                    | 获取Session对象        |
+| void setCharacterEncoding(String encoding) ; | 设置请求体字符集           |
+
+## HttpServletResponse
+
++ 设置响应行相关
+
+| API                        | 功能解释       |
+| -------------------------- | -------------- |
+| void setStatus(int  code); | 设置响应状态码 |
+
+
++ 设置响应头相关
+
+| API                                                    | 功能解释                                         |
+| ------------------------------------------------------ | ------------------------------------------------ |
+| void setHeader(String headerName, String headerValue); | 设置/修改响应头键值对                            |
+| void setContentType(String contentType);               | 设置content-type响应头及响应字符集(设置MIME类型) |
+
++ 设置响应体相关
+
+| API                                                       | 功能解释                                                |
+| --------------------------------------------------------- | ------------------------------------------------------- |
+| PrintWriter getWriter() throws IOException;               | 获得向响应体放入信息的字符输出流                        |
+| ServletOutputStream getOutputStream() throws IOException; | 获得向响应体放入信息的字节输出流                        |
+| void setContentLength(int length);                        | 设置响应体的字节长度,其实就是在设置content-length响应头 |
+
++ 其他API
+
+| API                                                          | 功能解释                                            |
+| ------------------------------------------------------------ | --------------------------------------------------- |
+| void sendError(int code, String message) throws IOException; | 向客户端响应错误信息的方法,需要指定响应码和响应信息 |
+| void addCookie(Cookie cookie);                               | 向响应体中增加cookie                                |
+| void setCharacterEncoding(String encoding);                  | 设置响应体字符集                                    |
+
+示例：
+```java
+@WebServlet("/s5")
+public class Servlet5 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 设置相应行相关的API  http/1.1  200/404/405...    状态描述
+		resp.setStatus(200);
+		String info = "<h1>hello</h1>";
+		// 设置响应头相关的API
+		resp.setHeader("aaa","valuea");
+		resp.setHeader("Content-Type","text/html");
+		resp.setContentType("text/html");
+		resp.setContentLength(info.getBytes().length);
+
+		// 设置响应体内容API
+		// 获得一个向响应体中输入文本字符输出流
+		PrintWriter writer = resp.getWriter();
+		writer.write(info);
+		// 获得一个系哪个响应体中输入二进制信息的字节输出流
+		ServletOutputStream outputStream = resp.getOutputStream();
+	}
+}
+
+```
 ## 6.4 Servlet 请求的分发处理
 
 - 根据请求的类型：POST/GET，执行不同的功能方法
