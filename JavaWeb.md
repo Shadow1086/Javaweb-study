@@ -2128,6 +2128,47 @@ public class Servlet3 extends HttpServlet {
 }
 ```
 
+## 域对象的相关API
+
+ - 域对象：一些用于存储数据和传递数据的对象，传递数据不同的方位，我们称之为不同的域，不用的域对想代表不同的域，共享数据的范围也不同
+ - Webapp中的三大域对象：应用域，会话域，请求域
+ - 应用域：ServletContext代表应用，ServletContext域代表应用域，是webapp中最大的域，可以在本应用内实现数据的共享和传递
+
+| API                                         | 功能解释            |
+| ------------------------------------------- | ------------------- |
+| void setAttribute(String key,Object value); | 向域中存储/修改数据 |
+| Object getAttribute(String key);            | 获得域中的数据      |
+| void removeAttribute(String key);           | 移除域中的数据      |
+
+示例：
+```java
+@WebServlet("/scope")
+public class ContextScope extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 作为域对象，一定会有的API
+		ServletContext servletContext = getServletContext();
+		servletContext.setAttribute("keya","valuea");           // 存储数据
+		servletContext.setAttribute("keya","valueaaa");         // 修改数据：替换掉上面的valuea这个值
+
+		Object keya = servletContext.getAttribute("keya");// 获取数据
+
+		servletContext.removeAttribute("keya");
+	}
+}
+// 读取域对象的数据
+@WebServlet("/servlet3")
+public class Servlet3 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 从域对象中读取数据
+		String keya = (String)servletContext.getAttribute("keya");
+		System.out.println(keya);
+	}
+}
+
+```
+
 ## 6.4 Servlet 请求的分发处理
 
 - 根据请求的类型：POST/GET，执行不同的功能方法
