@@ -2283,13 +2283,15 @@ public class Servlet5 extends HttpServlet {
 ## 请求转发和响应重定向
 
 
-+ 请求转发和响应重定向是web应用中间接访问项目资源的两种手段,也是Servlet控制页面跳转的两种手段
++ **请求转发**和**响应重定向**是web应用中间接访问项目资源的两种手段,也是Servlet控制页面跳转的两种手段
 
-+ 请求转发通过HttpServletRequest实现,响应重定向通过HttpServletResponse实现
++ 请求转发通过`HttpServletRequest`实现,响应重定向通过`HttpServletResponse`实现
++ 同样能够实现页面跳转时，优先使用**响应重定向**
+
 
 ### 请求转发
 
-请求转发的特点：
+**请求转发的特点：**
 + 请求转发通过HttpServletRequest对象获取请求转发器实现
 + 请求转发是服务器内部的行为,对客户端是屏蔽的
 + 客户端只发送了一次请求,客户端地址栏不变
@@ -2317,7 +2319,28 @@ public class ServletA extends HttpServlet {
 
 ### 响应重定向
 
+**相应重定向**特点：
++ 响应重定向通过HttpServletResponse对象的`sendRedirect`方法实现
++ 响应重定向是服务端通过302响应码和路径,告诉客户端自己去找其他资源,是在服务端提示下的,客户端的行为
++ 客户端至少发送了两次请求,客户端地址栏是要变化的
++ 服务端产生了多对请求和响应对象,且请求和响应对象不会传递给下一个资源
++ 因为全程产生了多个HttpServletRequset对象,所以请求参数不可以传递,请求域中的数据也不可以传递
++ 重定向可以是其他Servlet动态资源,也可以是一些静态资源以实现页面跳转
++ 重定向不可以到给WEB-INF下受保护的资源
++ 重定向可以到本项目以外的外部资源
 
+```java
+@WebServlet("/s1")
+public class Servlet1 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//1. 接受用户请求
+		System.out.println("servlet1 执行了");
+		// 响应重定向        设置相应状态码为302，同时设置location响应头
+		resp.sendRedirect("s2");
+	}
+}
+```
 
 ## 6.4 Servlet 请求的分发处理
 
