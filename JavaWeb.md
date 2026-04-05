@@ -2355,7 +2355,57 @@ public class Servlet1 extends HttpServlet {
 ## 路径问题
 
 
+## 会话管理
 
+### 什么是会话管理?
+
+- 管理的是客户端的状态
+- 实现的手段：
+  - Cookies
+  - Session
+
+### Cookies
+
+- 时效：默认有效期是一次会话范围内，可以通过cookie的setMaxAge(int time)方法持久化cookie,单位默认为秒
+- 会话范围时cookie保存在内村上，持久化时则保存在硬盘上
+
+示例：
+```java
+@WebServlet("/sa")
+public class Servlet1 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 创建Cookies
+		Cookie cookieA = new Cookie("keyA","valueA");
+		// 设置cookies的持久化时间
+		cookieA.setMaxAge(60*5);
+		// 设置cookie的提交路径
+		cookieA.setPath("/sb");
+		Cookie cookieB = new Cookie("keyB", "valueB");
+		// 将Cookies放入response对象中
+		resp.addCookie(cookieA);
+		resp.addCookie(cookieB);
+	}
+}
+public class Servlet2 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 获取请求中携带的cookie
+		Cookie[] cookies = req.getCookies();
+		// 请求中的多个cookies会进入该数组，请求中如果没有cookie,cookies数组为：null
+		if(null!= cookies){
+			for (Cookie cookie : cookies) {
+				System.out.println(cookie.getName() + "=" + cookie.getValue());
+			}
+		}
+	}
+}
+```
+
+### Session
+
+- Session的使用需要Cookie配合
+- 
 
 ## 6.4 Servlet 请求的分发处理
 
