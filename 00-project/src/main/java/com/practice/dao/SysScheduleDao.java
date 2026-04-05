@@ -14,6 +14,14 @@ import java.util.List;
 public interface SysScheduleDao {
 
 	/**
+	 *  添加日程信息
+	 *
+	 * @param sysSchedule   日程信息
+	 * @return int
+	 */
+	int addSchedule(SysSchedule sysSchedule);
+
+	/**
 	 *  输入用户的uid获取日程信息
 	 *
 	 * @param uid       用户的uid
@@ -38,13 +46,6 @@ public interface SysScheduleDao {
 	 */
 	SysSchedule findBySidAndUid(Integer sid, Integer uid);
 
-	/**
-	 *  添加日程信息
-	 *
-	 * @param sysSchedule   日程信息
-	 * @return int
-	 */
-	int addSchedule(SysSchedule sysSchedule);
 
 	/**
 	 *  更新日程信息

@@ -21,7 +21,6 @@ import java.util.Arrays;
 @Repository
 public interface SysUserDao {
 
-
 	int addSysUser(SysUser sysUser);
 
 	SysUser findByUsername(String username);

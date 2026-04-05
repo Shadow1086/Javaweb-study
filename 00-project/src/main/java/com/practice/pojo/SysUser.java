@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class SysUser {
-	private String uid;
+	private Integer uid;
 	private String username;
 	private String userPwd;
 }
