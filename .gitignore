@@ -51,4 +51,7 @@ build/
 
 /.serena/
 
+### Local Database Config ###
+/00-project/src/main/resources/jdbc.properties
+
 *.properties
