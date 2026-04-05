@@ -1,5 +1,6 @@
 package com.practice.service.Impl;
 
+import com.practice.dao.Impl.SysUserDaoImpl;
 import com.practice.dao.SysUserDao;
 import com.practice.pojo.SysUser;
 import com.practice.service.SysUserService;
@@ -14,11 +15,8 @@ import org.springframework.stereotype.Service;
  * {@code @Author} Liang-ht
  * {@code @Create} 2026-2026/4/5 14:45
  */
-@Service
 public class SysUserServiceImpl implements SysUserService {
-	@Resource(name = "sysUserDao")
-	private SysUserDao dao;
-
+	private final SysUserDao dao = new SysUserDaoImpl();
 	/**
 	 * 用户注册
 	 *
@@ -27,6 +25,19 @@ public class SysUserServiceImpl implements SysUserService {
 	 */
 	@Override
 	public int regist(SysUser sysUser) {
+		if(sysUser == null){
+			return 0;
+		}
+		String username = sysUser.getUsername();
+		if(username == null || username.isBlank()){
+			return 0;
+		}
+		if(dao.findByUsername(username)!=null){
+			return 0;
+		}
+		String userPwd = sysUser.getUserPwd();
+		String encode = PasswordUtil.encode(userPwd);
+		sysUser.setUserPwd(encode);
 		return dao.addSysUser(sysUser);
 	}
 

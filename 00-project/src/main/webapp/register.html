@@ -17,7 +17,7 @@
 			})
 			// 检验用户密码是否合法
 			$("#user-pwd").on("blur",function () {
-				let pattern = /^(?=.*_)[0-9A-Za-z]{5,10}$/;
+				let pattern = /^(?=.*_)[0-9A-Za-z_]{5,10}$/;
 				if (!pattern.test($(this).val())) {
 					$("#msg-pwd").text("NO");
 				} else {
@@ -25,7 +25,7 @@
 				}
 			})
 			$("#user-conpwd").on("blur",function () {
-				let pattern = /^(?=.*_)[0-9A-Za-z]{5,10}$/;
+				let pattern = /^(?=.*_)[0-9A-Za-z_]{5,10}$/;
 				if (!pattern.test($(this).val())) {
 					$("#msg-conpwd").text("NO");
 				} else {
@@ -42,7 +42,7 @@
 			<h1>欢迎来到长空日志管理</h1>
 			<h2>请注册</h2>
 		</div>
-		<div class="register-form">
+		<form method="post" action="/user/regist" class="register-form">
 			<div class="submit-form">
 				<label for="username">请输入账号：</label><input id="username" name="username" type="text"><span id="msg-username"></span>
 				<label for="user-pwd">请输入密码：</label><input id="user-pwd" name="user-pwd" type="password"><span id="msg-pwd"></span>
@@ -50,7 +50,7 @@
 			</div>
 			<hr>
 			<button>确认</button>
-		</div>
+		</form>
 	</div>
 </div>
 </body>

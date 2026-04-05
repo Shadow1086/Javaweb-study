@@ -2,6 +2,7 @@ package com.practice.dao.Impl;
 
 import com.practice.dao.SysScheduleDao;
 import com.practice.pojo.SysSchedule;
+import com.practice.util.DBUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,10 +17,8 @@ import java.util.List;
  * {@code @Author} Liang-ht
  * {@code @Create} 2026-2026/4/5 13:52
  */
-@Repository
 public class SysScheduleDaoImpl implements SysScheduleDao {
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+	private final JdbcTemplate jdbcTemplate = DBUtil.getJdbcTemplate();
 
 	/**
 	 * 输入用户的uid获取日程信息
