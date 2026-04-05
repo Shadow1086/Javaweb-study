@@ -41,7 +41,7 @@ public class SysUserDaoImpl implements SysUserDao {
 	@Override
 	public SysUser findByUsername(String username) {
 		String sql = """
-				SELECT * FROM sys_user WHERE username = ?
+				SELECT uid,username,user_pwd as userPwd  FROM sys_user WHERE username = ?
 				""";
 		List<SysUser> queryResult = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SysUser.class), username);
 		if (queryResult.size() == 1) {
@@ -59,7 +59,7 @@ public class SysUserDaoImpl implements SysUserDao {
 	@Override
 	public SysUser findByUid(Integer uid) {
 		String sql = """
-				SELECT * FROM sys_user WHERE uid = ?
+				SELECT uid,username,user_pwd as userPwd FROM sys_user WHERE uid = ?
 				""";
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(SysUser.class), uid);
 	}

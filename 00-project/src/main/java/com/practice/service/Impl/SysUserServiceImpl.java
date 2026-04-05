@@ -51,13 +51,11 @@ public class SysUserServiceImpl implements SysUserService {
 	@Override
 	public SysUser login(String username, String userPwd) {
 		SysUser user = dao.findByUsername(username);
-		String encodePwd = PasswordUtil.encode(user.getUserPwd());
-		if (PasswordUtil.matches(encodePwd, userPwd)) {
+		if (PasswordUtil.matches( userPwd,user.getUserPwd())) {
 			return user;
 		} else {
 			return null;
 		}
-
 	}
 
 	/**
