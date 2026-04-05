@@ -3,6 +3,7 @@ package com.practice.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class SysSchedule {
 	private Integer sid;
 	private Integer uid;
