@@ -1883,7 +1883,9 @@ public class UserServlet extends HttpServlet {
         // 应该设置Content-type响应头,如果设置错了，浏览器就不会识别相应的格式
 // 方法：setHeader("Content-Type","Value")/setContentType("Value");
 		response.setHeader("Content-Type","text/html");
-		response.setContentType("text/html");
+		response.
+
+setContentType("text/html");
 ```
 
 ### 关于url-pattern的精准匹配和模糊匹配
@@ -2227,36 +2229,37 @@ public class Servlet3 extends HttpServlet {
 
 + 设置响应行相关
 
-| API                        | 功能解释       |
-| -------------------------- | -------------- |
+| API                        | 功能解释    |
+|----------------------------|---------|
 | void setStatus(int  code); | 设置响应状态码 |
-
 
 + 设置响应头相关
 
-| API                                                    | 功能解释                                         |
-| ------------------------------------------------------ | ------------------------------------------------ |
-| void setHeader(String headerName, String headerValue); | 设置/修改响应头键值对                            |
+| API                                                    | 功能解释                              |
+|--------------------------------------------------------|-----------------------------------|
+| void setHeader(String headerName, String headerValue); | 设置/修改响应头键值对                       |
 | void setContentType(String contentType);               | 设置content-type响应头及响应字符集(设置MIME类型) |
 
 + 设置响应体相关
 
-| API                                                       | 功能解释                                                |
-| --------------------------------------------------------- | ------------------------------------------------------- |
-| PrintWriter getWriter() throws IOException;               | 获得向响应体放入信息的字符输出流                        |
-| ServletOutputStream getOutputStream() throws IOException; | 获得向响应体放入信息的字节输出流                        |
+| API                                                       | 功能解释                                |
+|-----------------------------------------------------------|-------------------------------------|
+| PrintWriter getWriter() throws IOException;               | 获得向响应体放入信息的字符输出流                    |
+| ServletOutputStream getOutputStream() throws IOException; | 获得向响应体放入信息的字节输出流                    |
 | void setContentLength(int length);                        | 设置响应体的字节长度,其实就是在设置content-length响应头 |
 
 + 其他API
 
-| API                                                          | 功能解释                                            |
-| ------------------------------------------------------------ | --------------------------------------------------- |
+| API                                                          | 功能解释                       |
+|--------------------------------------------------------------|----------------------------|
 | void sendError(int code, String message) throws IOException; | 向客户端响应错误信息的方法,需要指定响应码和响应信息 |
-| void addCookie(Cookie cookie);                               | 向响应体中增加cookie                                |
-| void setCharacterEncoding(String encoding);                  | 设置响应体字符集                                    |
+| void addCookie(Cookie cookie);                               | 向响应体中增加cookie              |
+| void setCharacterEncoding(String encoding);                  | 设置响应体字符集                   |
 
 示例：
+
 ```java
+
 @WebServlet("/s5")
 public class Servlet5 extends HttpServlet {
 	@Override
@@ -2265,8 +2268,8 @@ public class Servlet5 extends HttpServlet {
 		resp.setStatus(200);
 		String info = "<h1>hello</h1>";
 		// 设置响应头相关的API
-		resp.setHeader("aaa","valuea");
-		resp.setHeader("Content-Type","text/html");
+		resp.setHeader("aaa", "valuea");
+		resp.setHeader("Content-Type", "text/html");
 		resp.setContentType("text/html");
 		resp.setContentLength(info.getBytes().length);
 
@@ -2282,16 +2285,15 @@ public class Servlet5 extends HttpServlet {
 
 ## 请求转发和响应重定向
 
-
 + **请求转发**和**响应重定向**是web应用中间接访问项目资源的两种手段,也是Servlet控制页面跳转的两种手段
 
 + 请求转发通过`HttpServletRequest`实现,响应重定向通过`HttpServletResponse`实现
 + 同样能够实现页面跳转时，优先使用**响应重定向**
 
-
 ### 请求转发
 
 **请求转发的特点：**
+
 + 请求转发通过HttpServletRequest对象获取请求转发器实现
 + 请求转发是服务器内部的行为,对客户端是屏蔽的
 + 客户端只发送了一次请求,客户端地址栏不变
@@ -2302,7 +2304,9 @@ public class Servlet5 extends HttpServlet {
 + 请求转发不能转发到本项目以外的外部资源
 
 示例：
+
 ```java
+
 @WebServlet("/sa")
 public class ServletA extends HttpServlet {
 	@Override
@@ -2312,7 +2316,7 @@ public class ServletA extends HttpServlet {
 //		RequestDispatcher requestDispatcher = req.getRequestDispatcher("sb");
 //		RequestDispatcher requestDispatcher = req.getRequestDispatcher("a.html");
 		RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/b.html");
-		requestDispatcher.forward(req,resp);
+		requestDispatcher.forward(req, resp);
 	}
 }
 ```
@@ -2320,6 +2324,7 @@ public class ServletA extends HttpServlet {
 ### 响应重定向
 
 **相应重定向**特点：
+
 + 响应重定向通过HttpServletResponse对象的`sendRedirect`方法实现
 + 响应重定向是服务端通过302响应码和路径,告诉客户端自己去找其他资源,是在服务端提示下的,客户端的行为
 + 客户端至少发送了两次请求,客户端地址栏是要变化的
@@ -2330,6 +2335,7 @@ public class ServletA extends HttpServlet {
 + 重定向可以到本项目以外的外部资源
 
 ```java
+
 @WebServlet("/s1")
 public class Servlet1 extends HttpServlet {
 	@Override
@@ -2342,18 +2348,16 @@ public class Servlet1 extends HttpServlet {
 }
 ```
 
-
 ## 乱码问题
 
 产生的根本原因：
+
 - 数据的编码和解码使用的不是同一个字符集
 - 使用了不支持某个语言文字的字符集
 
 ### GET请求乱码
 
-
 ## 路径问题
-
 
 ## 会话管理
 
@@ -2361,8 +2365,8 @@ public class Servlet1 extends HttpServlet {
 
 - 管理的是客户端的状态
 - 实现的手段：
-  - Cookies
-  - Session
+    - Cookies
+    - Session
 
 ### Cookies
 
@@ -2370,15 +2374,17 @@ public class Servlet1 extends HttpServlet {
 - 会话范围时cookie保存在内村上，持久化时则保存在硬盘上
 
 示例：
+
 ```java
+
 @WebServlet("/sa")
 public class Servlet1 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 创建Cookies
-		Cookie cookieA = new Cookie("keyA","valueA");
+		Cookie cookieA = new Cookie("keyA", "valueA");
 		// 设置cookies的持久化时间
-		cookieA.setMaxAge(60*5);
+		cookieA.setMaxAge(60 * 5);
 		// 设置cookie的提交路径
 		cookieA.setPath("/sb");
 		Cookie cookieB = new Cookie("keyB", "valueB");
@@ -2387,13 +2393,14 @@ public class Servlet1 extends HttpServlet {
 		resp.addCookie(cookieB);
 	}
 }
+
 public class Servlet2 extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 获取请求中携带的cookie
 		Cookie[] cookies = req.getCookies();
 		// 请求中的多个cookies会进入该数组，请求中如果没有cookie,cookies数组为：null
-		if(null!= cookies){
+		if (null != cookies) {
 			for (Cookie cookie : cookies) {
 				System.out.println(cookie.getName() + "=" + cookie.getValue());
 			}
@@ -2406,7 +2413,9 @@ public class Servlet2 extends HttpServlet {
 
 - Session的使用需要Cookie配合
 - Session的存活时间可以在web.xml中设置，如下：
+
 ```xml
+
 <session-config>
 	<!--  以分钟为单位  -->
 	<session-timeout>30</session-timeout>
@@ -2414,7 +2423,9 @@ public class Servlet2 extends HttpServlet {
 ```
 
 使用示例：
+
 ```java
+
 @WebServlet("/s1")
 public class Servlet1 extends HttpServlet {
 	@Override
@@ -2424,17 +2435,18 @@ public class Servlet1 extends HttpServlet {
 		// 获得session对象
 		HttpSession session = req.getSession();
 		// 判断请求中有没有一个特殊的cookie，称为：JSESSIONID    值 *** ***
-			// 有,根据JSESSIONID找对应的session对象,找到则返回旧的session对象，找不到就创建新的session对象
-			// 没有，创建一个新的session返回，并且想response对象中存放一个JSESSIONID的cookie
+		// 有,根据JSESSIONID找对应的session对象,找到则返回旧的session对象，找不到就创建新的session对象
+		// 没有，创建一个新的session返回，并且想response对象中存放一个JSESSIONID的cookie
 		System.out.println(session.getId());
 		System.out.println(session.isNew());
 		// 将username存入session
-		session.setAttribute("username",username);
+		session.setAttribute("username", username);
 		// 客户端响应信息
 		resp.setContentType("text/html;charset= UTF-8");
 		resp.getWriter().write("成功");
 	}
 }
+
 @WebServlet("/s2")
 public class Servlet2 extends HttpServlet {
 	@Override
@@ -2455,7 +2467,7 @@ public class Servlet2 extends HttpServlet {
 
 ## 三大域对象
 
-###  域对象概述
+### 域对象概述
 
 > 域对象: 一些用于存储数据和传递数据的对象,传递数据不同的范围,我们称之为不同的域,不同的域对象代表不同的域,共享数据的范围也不同
 
@@ -2472,11 +2484,11 @@ public class Servlet2 extends HttpServlet {
 
 ### 三大域的通用API
 
-| API                                         | 功能                    |
-| ------------------------------------------- | ----------------------- |
+| API                                         | 功能           |
+|---------------------------------------------|--------------|
 | void setAttribute(String name,String value) | 向域对象中添加/修改数据 |
-| Object getAttribute(String name);           | 从域对象中获取数据      |
-| removeAttribute(String name);               | 移除域对象中的数据      |
+| Object getAttribute(String name);           | 从域对象中获取数据    |
+| removeAttribute(String name);               | 移除域对象中的数据    |
 
 - 请求域：
 
@@ -2490,15 +2502,89 @@ public class Servlet2 extends HttpServlet {
 
 <img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/14-39-qRHnrO" style="zoom:50%;" />
 
-
 ## Filter过滤器
 
 ### 过滤器概述
 
 - 作用：对目标资源的请求进行过滤
+- 过滤器的实现：分为三步，简单理解，就是以chain.doFilter()为界
+    1. 请求到达目标资源前的代码：比如判断用户是否登录
+    2. 放行，其实就一行chain.doFilter(req,reps)
+    3. 响应之前，response转换为响应报文之前
 - 图解：
 
 <img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/15-04-l4q4nz" style="zoom:60%;" />
+
+使用示例：
+
+```java
+@WebServlet(value = "/s1", name = "servlet1")
+public class Servlet1 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("servlet1 service invoked");
+		resp.getWriter().write("servlet1 message");
+	}
+}
+
+// 过滤器
+public class LoggingFilter implements Filter {
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	/**
+	 * 过滤请求和响应的方法
+	 * 1. 请求到达目标资源之前，先经过该方法
+	 * 2. 该方法有能力控制请求是否继续向后到达目标资源，可以在该方法内直接像客户端做响应处理
+	 * 3. 请求达到目标资源后，响应之前，还会经过该方法
+	 */
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+		// 参数父传子
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+		// 1. 请求到达目标资源之前的功能代码，比如：判断是否登录，校验权限是否满足。。。
+		// 请求到达目标资源之前，打印日志， yyyy-MM-dd HH:mm:ss ：*** 被访问了
+		String requestURI = request.getRequestURI();
+		String dateTime = dateFormat.format(new Date());
+		System.out.println(requestURI + "在" + dateTime + "被访问了");
+
+		// 2. 放行代码
+		long before = System.currentTimeMillis();
+
+		chain.doFilter(request, response);
+
+		long after = System.currentTimeMillis();
+
+		// 3. 响应之前，HttpServletResponse 转换为响应报文之前的功能代码，  资源在yyyy-MM-dd HH:mm:ss的请求：耗时。。毫秒
+		System.out.print(requestURI + "资源在" + dateTime + "的请求耗时" + (after - before) + "毫秒");
+	}
+}
+```
+
+```xml
+
+<filter>
+	<filter-name>loggingFilter</filter-name>
+	<filter-class>com.practice.filter.LoggingFilter</filter-class>
+</filter>
+		<!--	配置过滤器的过滤资源柜子，路径servlet-name-->
+<filter-mapping>
+<filter-name>loggingFilter</filter-name>
+<!--两种方式：
+1.url-pattern       根据请求的资源路径，对指定的请求进行过滤
+        /*          过滤全部资源
+        /a/*        过滤以a开头的资源
+        *.html      过滤以html为后缀的资源
+        /servlet1   对servlet1的请求进行过滤
+ 2.servlet-name     根据请求的servlet的别名，对指定的servlet资源进行过滤
+    需要在java类中的@WebServlet()中定义value和name两个属性，value是访问路径，name是servlet-name填写的
+
+ 一个filter-mapping中，可以同时存在多个url-pattern和servlet-name
+-->
+<url-pattern>/*</url-pattern>
+<servlet-name>servlet1</servlet-name>
+</filter-mapping>
+```
 
 ## 6.4 Servlet 请求的分发处理
 
