@@ -2453,6 +2453,53 @@ public class Servlet2 extends HttpServlet {
 }
 ```
 
+## 三大域对象
+
+###  域对象概述
+
+> 域对象: 一些用于存储数据和传递数据的对象,传递数据不同的范围,我们称之为不同的域,不同的域对象代表不同的域,共享数据的范围也不同
+
++ web项目中,我们一定要熟练使用的域对象分别是 请求域,会话域,应用域
++ **请求域**对象是`HttpServletRequest` ,传递数据的范围是一次请求之内及请求转发
++ **会话域**对象是`HttpSession`,传递数据的范围是一次会话之内,可以跨多个请求
++ **应用域**对象是`ServletContext`,传递数据的范围是本应用之内,可以跨多个会话
+
+### 三大域存放的数据
+
+- 请求转发时，请求域可以传递数据，请求域内一般存放**本次请求业务有关的数据**，比如：查询到的所有的部门信息
+- 同一个会话内，不用请求转发，会话域可以传递数据，会话域内一般放**本次会话的客户端有关的数据**，比如：当前客户端登录的用户
+- 同一个app内，不同的客户端，应用域可以传递数据，应用域内一般放**本程序应用有关的数据**，比如：Spring框架的IOC容器
+
+### 三大域的通用API
+
+| API                                         | 功能                    |
+| ------------------------------------------- | ----------------------- |
+| void setAttribute(String name,String value) | 向域对象中添加/修改数据 |
+| Object getAttribute(String name);           | 从域对象中获取数据      |
+| removeAttribute(String name);               | 移除域对象中的数据      |
+
+- 请求域：
+
+<img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/14-38-5zIsCu" style="zoom: 50%;" />
+
+- 会话域：
+
+<img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/14-39-0huOEh" style="zoom:50%;" />
+
+- 应用域：
+
+<img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/14-39-qRHnrO" style="zoom:50%;" />
+
+
+## Filter过滤器
+
+### 过滤器概述
+
+- 作用：对目标资源的请求进行过滤
+- 图解：
+
+<img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/15-04-l4q4nz" style="zoom:60%;" />
+
 ## 6.4 Servlet 请求的分发处理
 
 - 根据请求的类型：POST/GET，执行不同的功能方法
