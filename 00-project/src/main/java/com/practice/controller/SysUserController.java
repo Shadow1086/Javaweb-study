@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -69,6 +70,9 @@ public class SysUserController extends BaseController {
 		} else {
 			SysUser user = new SysUser(null, username, password);
 			if(PasswordUtil.matches(password,userData.getUserPwd())){
+				// 登录成功后，将登录的用户信息放入session域
+				HttpSession session = req.getSession();
+				session.setAttribute("sysUser",userData);
 				// 登录成功，用户名密码正确
 				resp.sendRedirect("/showSchedule.html");
 			}else {
