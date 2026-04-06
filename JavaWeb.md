@@ -2511,6 +2511,9 @@ public class Servlet2 extends HttpServlet {
     1. 请求到达目标资源前的代码：比如判断用户是否登录
     2. 放行，其实就一行chain.doFilter(req,reps)
     3. 响应之前，response转换为响应报文之前
+- 过滤器的配置方式：
+  - web.xml方式
+  - 注解方式：@WebFilter(),可以通过看源码理解参数
 - 图解：
 
 <img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/15-04-l4q4nz" style="zoom:60%;" />
@@ -2529,9 +2532,15 @@ public class Servlet1 extends HttpServlet {
 }
 
 // 过滤器
+// 注解方式：
+@WebFilter(
+		filterName="loggingFilter",
+        initParams={@WebInitParam(name="dateTimePattern",value="yyyy-MM-dd HH:mm:ss")},
+        urlPattern={"/s1","*.html"},
+        servletNames={"servlet1"}
+)
 public class LoggingFilter implements Filter {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 	/**
 	 * 过滤请求和响应的方法
 	 * 1. 请求到达目标资源之前，先经过该方法
@@ -2543,20 +2552,17 @@ public class LoggingFilter implements Filter {
 		// 参数父传子
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-
 		// 1. 请求到达目标资源之前的功能代码，比如：判断是否登录，校验权限是否满足。。。
 		// 请求到达目标资源之前，打印日志， yyyy-MM-dd HH:mm:ss ：*** 被访问了
 		String requestURI = request.getRequestURI();
 		String dateTime = dateFormat.format(new Date());
 		System.out.println(requestURI + "在" + dateTime + "被访问了");
-
 		// 2. 放行代码
 		long before = System.currentTimeMillis();
 
 		chain.doFilter(request, response);
 
 		long after = System.currentTimeMillis();
-
 		// 3. 响应之前，HttpServletResponse 转换为响应报文之前的功能代码，  资源在yyyy-MM-dd HH:mm:ss的请求：耗时。。毫秒
 		System.out.print(requestURI + "资源在" + dateTime + "的请求耗时" + (after - before) + "毫秒");
 	}
@@ -2603,20 +2609,17 @@ public class LifeCycleFilter implements Filter {
 	public LifeCycleFilter() {
 		System.out.println("filter 构造器");
 	}
-
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// 其中filterConfig是过滤器的初始配置，在web.xml中配置
 		System.out.println("初始化");
 		System.out.println(filterConfig.getInitParameter("dateTimePattern"));
 	}
-
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("过滤方法");
 		chain.doFilter(request,response);
 	}
-
 	@Override
 	public void destroy() {
 		System.out.println("销毁方法");
@@ -2639,6 +2642,16 @@ public class LifeCycleFilter implements Filter {
 <url-pattern>/*</url-pattern>
 </filter-mapping>
 ```
+
+## 过滤器链的使用-FilterChain
+
+- 过滤链是通过多个过滤器对**同一个资源进行过滤**就会出现
+
++ 过滤器链中的过滤器的**顺序由filter-mapping决定**
++ 每个过滤器过滤的范围不同,针对同一个资源来说,过滤器链中的过滤器个数可能是不同的
++ 如果某个Filter是使用ServletName进行匹配规则的配置，那么这个Filter执行的优先级要更低
+
+![](https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/16-56-95Nk0B)
 
 ## 6.4 Servlet 请求的分发处理
 
