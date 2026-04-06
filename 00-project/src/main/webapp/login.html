@@ -13,7 +13,8 @@
 			// 检验用户名格式是否合法
 			$("#username").on("blur", function () {
 				let pattern = /^[0-9A-Za-z]{5,10}$/;
-				$("#msg-u-name").text(pattern.test($(this).val()) ? "YES" : "NO")
+				let username = $(this).val();
+				$("#msg-u-name").text(pattern.test(username) ? "YES" : "NO")
 			})
 			// 检验用户密码是否合法
 			$("#password").on("blur",function (){

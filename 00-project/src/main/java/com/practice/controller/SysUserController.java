@@ -1,14 +1,18 @@
 package com.practice.controller;
 
+import com.practice.common.Result;
+import com.practice.common.ResultCodeEnum;
 import com.practice.pojo.SysUser;
 import com.practice.service.Impl.SysUserServiceImpl;
 import com.practice.service.SysUserService;
 import com.practice.util.PasswordUtil;
+import com.practice.util.WebUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -69,16 +73,33 @@ public class SysUserController extends BaseController {
 			resp.sendRedirect("/loginUserError.html");
 		} else {
 			SysUser user = new SysUser(null, username, password);
-			if(PasswordUtil.matches(password,userData.getUserPwd())){
+			if (PasswordUtil.matches(password, userData.getUserPwd())) {
 				// 登录成功后，将登录的用户信息放入session域
 				HttpSession session = req.getSession();
-				session.setAttribute("sysUser",userData);
+				session.setAttribute("sysUser", userData);
 				// 登录成功，用户名密码正确
 				resp.sendRedirect("/showSchedule.html");
-			}else {
+			} else {
 				resp.sendRedirect("/loginUserPwdError.html");
 			}
 		}
+	}
 
+	/**
+	 * 注册时，接受要注册的用户名，校验用户名是否被占用的业务接口
+	 */
+	protected void checkUsernameUsed(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 接受用户名
+		String username = req.getParameter("username");
+		// 判断是否被占用
+		SysUser user = service.findByUsername(username);
+		Result<Object> result = Result.ok(null);
+		// 返回值
+		if (user != null) {
+			result = Result.build(null, ResultCodeEnum.USERNAME_USED);
+		}
+		// 将result对象转换为JSON串响应给客户端
+		// ObjectMapper
+		WebUtil.writejson(resp,result);
 	}
 }

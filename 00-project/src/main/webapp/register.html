@@ -13,7 +13,26 @@
 			// 检验用户名格式是否合法
 			$("#username").on("blur", function () {
 				let pattern = /^[0-9A-Za-z]{5,10}$/;
-				$("#msg-username").text(pattern.test($(this).val()) ? "YES" : "NO")
+				let username = $(this).val();
+				$("#msg-username").text(pattern.test(username) ? "" : "NO")
+
+				// 检验用户名是否已被注册
+				let request = new XMLHttpRequest();
+				request.onreadystatechange = function () {
+					if(request.status === 200 && request.readyState === 4){
+						console.log("后端响应了");
+						// console.log(request.responseText)
+						// $("#msg-username").text(request.responseText);
+						let result = JSON.parse(request.responseText);
+						if(result.code===200){
+							$("#msg-username").text("可用");
+						}else if(result.code===505){
+							$("#msg-username").text("不可用");
+						}
+					}
+				}
+				request.open("GET","/user/checkUsernameUsed?username="+username);
+				request.send();
 			})
 			// 检验用户密码是否合法
 			$("#user-pwd").on("blur",function () {
@@ -30,6 +49,10 @@
 					$("#msg-conpwd").text("NO");
 				} else {
 					$("#msg-conpwd").text("YES");
+				}
+				let pwd = $("#user-pwd").val();
+				if(pwd !== this.val){
+					$("#msg-conpwd").text("NO");
 				}
 			})
 		})
