@@ -2753,3 +2753,36 @@ public void doPost() {
 </Context>
 ```
 
+## AJAX的基本使用
+
+示例：
+
+```html
+
+<script>
+	$(function () {
+		$("button").on("click", function () {
+			// 实例化一个xmlHttpRequest对象
+			let request = new XMLHttpRequest();
+			// 设置对象的回调函数
+			// request.readyState 1 2 3 4,其中4:代表后端返回了数据
+			// request.status：响应状态码
+			request.onreadystatechange = function () {
+				if (request.readyState === 4 && request.status === 200) {
+					// 接受响应的结果，处理结果
+					// alert("后端响应了")
+					// request.responseText 后端响应回来的响应体中的数据
+					// console.log(request.responseText);
+					// // 将信息放到指定的位置
+					// $("#message").val(request.responseText)
+					window.location.href = "https://www.baidu.com"
+				}
+			}
+			// 设置发送请求的方式和请求的资源路径
+			request.open("GET", "/hello?username=zhangsan");
+			// 发送请求
+			request.send();
+		})
+	})
+</script>
+```
