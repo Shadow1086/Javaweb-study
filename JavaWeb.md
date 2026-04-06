@@ -2405,7 +2405,53 @@ public class Servlet2 extends HttpServlet {
 ### Session
 
 - Session的使用需要Cookie配合
-- 
+- Session的存活时间可以在web.xml中设置，如下：
+```xml
+<session-config>
+	<!--  以分钟为单位  -->
+	<session-timeout>30</session-timeout>
+</session-config> 
+```
+
+使用示例：
+```java
+@WebServlet("/s1")
+public class Servlet1 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 接受请求中的username参数
+		String username = req.getParameter("username");
+		// 获得session对象
+		HttpSession session = req.getSession();
+		// 判断请求中有没有一个特殊的cookie，称为：JSESSIONID    值 *** ***
+			// 有,根据JSESSIONID找对应的session对象,找到则返回旧的session对象，找不到就创建新的session对象
+			// 没有，创建一个新的session返回，并且想response对象中存放一个JSESSIONID的cookie
+		System.out.println(session.getId());
+		System.out.println(session.isNew());
+		// 将username存入session
+		session.setAttribute("username",username);
+		// 客户端响应信息
+		resp.setContentType("text/html;charset= UTF-8");
+		resp.getWriter().write("成功");
+	}
+}
+@WebServlet("/s2")
+public class Servlet2 extends HttpServlet {
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//获得session对象
+		HttpSession session = req.getSession();
+		session.setMaxInactiveInterval(120);    //最大存活时间：秒
+		System.out.println(session.getId());
+		System.out.println(session.isNew());
+		// 读取session中存储的用户名
+		String username = (String) session.getAttribute("username");
+
+		System.out.println("servlet2 got username:" + username);
+
+	}
+}
+```
 
 ## 6.4 Servlet 请求的分发处理
 
