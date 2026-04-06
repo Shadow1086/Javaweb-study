@@ -2518,6 +2518,7 @@ public class Servlet2 extends HttpServlet {
 使用示例：
 
 ```java
+
 @WebServlet(value = "/s1", name = "servlet1")
 public class Servlet1 extends HttpServlet {
 	@Override
@@ -2530,6 +2531,7 @@ public class Servlet1 extends HttpServlet {
 // 过滤器
 public class LoggingFilter implements Filter {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	/**
 	 * 过滤请求和响应的方法
 	 * 1. 请求到达目标资源之前，先经过该方法
@@ -2583,6 +2585,58 @@ public class LoggingFilter implements Filter {
 -->
 <url-pattern>/*</url-pattern>
 <servlet-name>servlet1</servlet-name>
+</filter-mapping>
+```
+
+### filter生命周期：
+
+| 阶段    | 对应方法                                                                                                   | 执行时机     | 执行次数 |
+|-------|--------------------------------------------------------------------------------------------------------|----------|------|
+| 创建对象  | 构造器                                                                                                    | web应用启动时 | 1    |
+| 初始化方法 | void init(FilterConfig filterConfig)                                                                   | 构造完毕     | 1    |
+| 过滤请求  | void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) | 每次请求     | 多次   |
+| 销毁    | default void destroy()                                                                                 | web应用关闭时 | 1次   |
+
+示例：
+```java
+public class LifeCycleFilter implements Filter {
+	public LifeCycleFilter() {
+		System.out.println("filter 构造器");
+	}
+
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		// 其中filterConfig是过滤器的初始配置，在web.xml中配置
+		System.out.println("初始化");
+		System.out.println(filterConfig.getInitParameter("dateTimePattern"));
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		System.out.println("过滤方法");
+		chain.doFilter(request,response);
+	}
+
+	@Override
+	public void destroy() {
+		System.out.println("销毁方法");
+	}
+}
+```
+
+```xml
+<!--filterConfig,Filter的初始化配置-->
+<filter>
+	<filter-name>lifeCycleFilter</filter-name>
+	<filter-class>com.practice.filter.LifeCycleFilter</filter-class>
+	<init-param>
+		<param-name>dateTimePattern</param-name>
+		<param-value>yyyy-MM-dd HH:mm:ss</param-value>
+	</init-param>
+</filter>
+<filter-mapping>
+<filter-name>lifeCycleFilter</filter-name>
+<url-pattern>/*</url-pattern>
 </filter-mapping>
 ```
 
