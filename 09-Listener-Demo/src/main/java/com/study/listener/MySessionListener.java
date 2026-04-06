@@ -1,4 +1,4 @@
-package com.study;
+package com.study.listener;
 
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.*;

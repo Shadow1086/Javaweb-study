@@ -1,5 +1,7 @@
 package com.study;
 
+import com.study.listener.MyActicationListener;
+import com.study.listener.SessionBindingListener;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,6 +34,13 @@ public class Servlet1 extends HttpServlet {
 		application.removeAttribute("keyA");
 
 		HttpSession session = req.getSession();
+
+		SessionBindingListener sbl = new SessionBindingListener();
+		session.setAttribute("sbl",sbl);
+		session.removeAttribute("sbl");
+
+		MyActicationListener myActicationListener = new MyActicationListener();
+		session.setAttribute("lis",myActicationListener);
 
 		// 手动销毁session
 		session.invalidate();
