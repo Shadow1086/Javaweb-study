@@ -90,7 +90,7 @@ if (a) {
 }               // 返回假
 ```
 
-注意：
+> **注意：**
 
 - `&&`：当表达式都为真时，返回最后一个表达式的值；只要有一个为假，就返回第一个为假的值
 - `||`：当表达式都为假时，返回最后一个表达式的值；只要有一个为真，就返回第一个为真的值
@@ -1787,7 +1787,7 @@ Date: Mon, 13 Aug 2018 02:47:57 GMT  响应的时间，这可能会有8小时的
 - 本质上是运行在服务器上的 Java 程序，用来接收请求并返回响应
 - 在老版本中常见包名是 `javax.servlet.*`，在 Tomcat 10+ 中通常使用 `jakarta.servlet.*`
 
-### 6.2 Servlet运行流程
+### 6.1.1 Servlet运行流程
 
 1. tomcat接收到请球后，会将请求报文的信息转换成一个HttpServletRequest对象，该对象中包含了请求中的所有信息，包括：请求行，请求头，请求体
 2. tomcat同时床架呢了一个HttpServletResponse对象，该对象用于承装要响应给客户端的信息。后面该对象会被转换成响应的报文：相应行，响应头，响应体
@@ -1834,17 +1834,16 @@ public class UserServlet extends HttpServlet {
 	}
 }
 ```
-
-## Servlet 开发流程
+## 6.2.1 Servlet 开发流程
 
 1. 创建javaweb项目，同时将tomcat添加为当前项目的依赖
 2. 重写Service方法，service(HttpServletRequest req,HttpServletResponse resp)
 3. 在service方法中，定义业务处理代码
 4. 在web.xml中，配置servlet对应的请求映射路径
 
-### 6.2.1 使用 `web.xml` 配置
+### 6.2.2 使用 `web.xml` 配置
 
-注意：
+> **注意：**
 
 - 一个servlet-name可以有多个url-pattern
 - 一个servlet标签可以有多个servlet-mapping标签，但是少见，可以直接按照方法一来写
@@ -1873,7 +1872,7 @@ public class UserServlet extends HttpServlet {
 </web-app>
 ```
 
-### 设置Content-Type
+### 6.2.3 设置Content-Type
 
 通过调用response的`setHeader("Content-Type","Value")`和`setContentType("value")`方法即可设置响应头中的`Content-type`属性
 
@@ -1888,7 +1887,7 @@ public class UserServlet extends HttpServlet {
 setContentType("text/html");
 ```
 
-### 关于url-pattern的精准匹配和模糊匹配
+### 6.2.4 关于url-pattern的精准匹配和模糊匹配
 
 - 精确匹配：
     - `/servlet1`
@@ -1912,7 +1911,7 @@ setContentType("text/html");
 </servlet-mapping>
 ```
 
-### 6.2.2 使用 `@WebServlet` 注解
+### 6.2.5 使用 `@WebServlet` 注解
 
 - 现代项目里更常见的是直接使用注解映射，不一定非要写到 `web.xml`。但是两者只能二选一，如果使用注解就不能使用web.xml文件方式了
 - 如果@WebServlet("")中少写了'/'，就会报错：`IllegalStateException:启动子级时报错`
@@ -1933,7 +1932,7 @@ public class ReportServlet extends HttpServlet {
 }
 ```
 
-### 6.2.3 `javax.servlet` 和 `jakarta.servlet`
+### 6.2.6 `javax.servlet` 和 `jakarta.servlet`
 
 - Tomcat 9 及以前，常见的是 `javax.servlet.*`
 - Tomcat 10 及以后，常见的是 `jakarta.servlet.*`
@@ -1946,19 +1945,19 @@ public class ReportServlet extends HttpServlet {
 3. 每次请求到来时调用 `service()`               每次请求
 4. 容器关闭或卸载应用时调用 `destroy()`          关闭服务
 
-注意：
+> **注意：**
 
 - servlet在tomcat中是单例的
 - servlet的成员变量在多个线程栈之中是共享的
 - 不建议在service方法中修改成员变量，在并发请求时，
 
-补充：
+> **补充：**
 
 - 默认情况下，Servlet 往往在第一次请求到来时创建
 - 如果配置了 `load-on-startup`，也可以在服务器启动时创建
 - `init()` 只执行一次，`service()` 会执行多次，`destroy()` 通常只执行一次
 
-## default-servlet
+## 6.4 default-servlet
 
 - **作用：**
     - 当浏览器请求静态资源时，比如：`aaa.html/a.png/a.js/a.css`，浏览器会查找`所有的servlet`
@@ -1967,9 +1966,9 @@ public class ReportServlet extends HttpServlet {
     - `SpringMVC`会让`default-servlet`失效，也就是说如果不对静态资源文件做特殊处理，客户端请求的**所有静态资源**
       时就会找不到，报404
 
-## Servlet继承结构
+## 6.5 Servlet继承结构
 
-### Servlet接口
+### 6.5.1 Servlet接口
 
 - 顶级接口：Servlet
 - 方法：
@@ -2008,9 +2007,9 @@ public class ReportServlet extends HttpServlet {
 
 ![](https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/03/20-06-js2MCO)
 
-## ServletConfig 和 ServletContext 的使用
+## 6.6 ServletConfig 和 ServletContext 的使用
 
-### ServletConfig
+### 6.6.1 ServletConfig
 
 - 方法一：在web.xml中通过使用servlet 的子标签：`init-param`标签，可以设置servletConfig的初始化配置，就会生成一个ServletConfig的对象
 - 方法二：通过注解：`@WebServlet(initParams={@WebInitParam(name="encoding",value="UTF-8")})`
@@ -2021,13 +2020,13 @@ public class ReportServlet extends HttpServlet {
         - nextElement()：取出下一个元素，向下移动游标(指针)
 - 注意：每个servlet都有自己的ServletConfig对象，比如Servlet1创建的Config对象，Servlet2使用不了
 
-### ServletContext
+### 6.6.2 ServletContext
 
 - 容器会为每个app创建一个独立的唯一的ServletContext对象
 - ServletContext对象为所有的Servlet所共享,并且可以为所有的Servlet提供初始配置参数
 - 内存上的差异：config是多例的，而context是单例的
 
-两者用法示例(基本上是一样的)：
+> **两者用法示例(基本上是一样的)：**
 
 ```xml
 
@@ -2105,7 +2104,7 @@ public class Servlet1 extends HttpServlet {
 
 ```
 
-### ServletContext 常用API
+### 6.6.3 ServletContext 常用API
 
 - 获取文件路径：getRealPath()
 - 获取项目部署的上下文路径：getContextPath()
@@ -2132,7 +2131,7 @@ public class Servlet3 extends HttpServlet {
 }
 ```
 
-## 域对象的相关API
+## 6.7 域对象的相关API
 
 - 域对象：一些用于存储数据和传递数据的对象，传递数据不同的方位，我们称之为不同的域，不用的域对想代表不同的域，共享数据的范围也不同
 - Webapp中的三大域对象：应用域，会话域，请求域
@@ -2144,7 +2143,7 @@ public class Servlet3 extends HttpServlet {
 | Object getAttribute(String key);            | 获得域中的数据    |
 | void removeAttribute(String key);           | 移除域中的数据    |
 
-示例：
+> **示例：**
 
 ```java
 
@@ -2176,13 +2175,13 @@ public class Servlet3 extends HttpServlet {
 
 ```
 
-## HttpServletRequest
+## 6.8 HttpServletRequest
 
 - HttpServletRequest 是一个接口，其父接口是ServletRequest
 - Tomcat将请求报文转成封装而来的对象，在Tomcat调用service方法时传入
 - HttpServletRequest代表客户端发来的请求，所有请求中的信息都可以通过该对象获得
 
-+ 获取请求行信息相关(方式,请求的url,协议及版本)
++ **获取请求行信息相关**(方式,请求的url,协议及版本)
 
 | API                           | 功能解释            |
 |-------------------------------|-----------------|
@@ -2195,7 +2194,7 @@ public class Servlet3 extends HttpServlet {
 | String getProtocol();         | 获取请求协议及版本号      |
 | String getMethod();           | 获取请求方式          |
 
-+ 获得请求头信息相关
++ **获得请求头信息相关**
 
 | API                                   | 功能解释              |
 |---------------------------------------|-------------------|
@@ -2203,7 +2202,7 @@ public class Servlet3 extends HttpServlet {
 | Enumeration<String> getHeaderNames(); | 获取所有的请求头名字        |
 | String getContentType();              | 获取content-type请求头 |
 
-+ 获得请求参数相关
++ **获得请求参数相关**
 
 | API                                                     | 功能解释               |
 |---------------------------------------------------------|--------------------|
@@ -2215,7 +2214,7 @@ public class Servlet3 extends HttpServlet {
 | ServletInputStream getInputStream() throws IOException; | 获取读取请求体的字节输入流      |
 | int getContentLength();                                 | 获得请求体长度的字节数        |
 
-+ 其他API
++ **其他API**
 
 | API                                          | 功能解释               |
 |----------------------------------------------|--------------------|
@@ -2225,22 +2224,22 @@ public class Servlet3 extends HttpServlet {
 | HttpSession getSession();                    | 获取Session对象        |
 | void setCharacterEncoding(String encoding) ; | 设置请求体字符集           |
 
-## HttpServletResponse
+## 6.9 HttpServletResponse
 
-+ 设置响应行相关
++ **设置响应行相关**
 
 | API                        | 功能解释    |
 |----------------------------|---------|
 | void setStatus(int  code); | 设置响应状态码 |
 
-+ 设置响应头相关
++ **设置响应头相关**
 
 | API                                                    | 功能解释                              |
 |--------------------------------------------------------|-----------------------------------|
 | void setHeader(String headerName, String headerValue); | 设置/修改响应头键值对                       |
 | void setContentType(String contentType);               | 设置content-type响应头及响应字符集(设置MIME类型) |
 
-+ 设置响应体相关
++ **设置响应体相关**
 
 | API                                                       | 功能解释                                |
 |-----------------------------------------------------------|-------------------------------------|
@@ -2248,7 +2247,7 @@ public class Servlet3 extends HttpServlet {
 | ServletOutputStream getOutputStream() throws IOException; | 获得向响应体放入信息的字节输出流                    |
 | void setContentLength(int length);                        | 设置响应体的字节长度,其实就是在设置content-length响应头 |
 
-+ 其他API
++ **其他API**
 
 | API                                                          | 功能解释                       |
 |--------------------------------------------------------------|----------------------------|
@@ -2256,7 +2255,7 @@ public class Servlet3 extends HttpServlet {
 | void addCookie(Cookie cookie);                               | 向响应体中增加cookie              |
 | void setCharacterEncoding(String encoding);                  | 设置响应体字符集                   |
 
-示例：
+> **示例：**
 
 ```java
 
@@ -2283,16 +2282,16 @@ public class Servlet5 extends HttpServlet {
 }
 ```
 
-## 请求转发和响应重定向
+## 6.10 请求转发和响应重定向
 
 + **请求转发**和**响应重定向**是web应用中间接访问项目资源的两种手段,也是Servlet控制页面跳转的两种手段
 
 + 请求转发通过`HttpServletRequest`实现,响应重定向通过`HttpServletResponse`实现
 + 同样能够实现页面跳转时，优先使用**响应重定向**
 
-### 请求转发
+### 6.10.1 请求转发
 
-**请求转发的特点：**
+> **请求转发的特点：**
 
 + 请求转发通过HttpServletRequest对象获取请求转发器实现
 + 请求转发是服务器内部的行为,对客户端是屏蔽的
@@ -2321,9 +2320,9 @@ public class ServletA extends HttpServlet {
 }
 ```
 
-### 响应重定向
+### 6.10.2 响应重定向
 
-**相应重定向**特点：
+> **相应重定向**特点：
 
 + 响应重定向通过HttpServletResponse对象的`sendRedirect`方法实现
 + 响应重定向是服务端通过302响应码和路径,告诉客户端自己去找其他资源,是在服务端提示下的,客户端的行为
@@ -2348,32 +2347,32 @@ public class Servlet1 extends HttpServlet {
 }
 ```
 
-## 乱码问题
+## 6.11 乱码问题
 
-产生的根本原因：
+> **产生的根本原因：**
 
 - 数据的编码和解码使用的不是同一个字符集
 - 使用了不支持某个语言文字的字符集
 
-### GET请求乱码
+### 6.11.1 GET请求乱码
 
-## 路径问题
+## 6.12 路径问题
 
-## 会话管理
+## 6.13 会话管理
 
-### 什么是会话管理?
+### 6.13.1 什么是会话管理?
 
 - 管理的是客户端的状态
 - 实现的手段：
     - Cookies
     - Session
 
-### Cookies
+### 6.13.2 Cookies
 
 - 时效：默认有效期是一次会话范围内，可以通过cookie的setMaxAge(int time)方法持久化cookie,单位默认为秒
 - 会话范围时cookie保存在内村上，持久化时则保存在硬盘上
 
-示例：
+> **示例：**
 
 ```java
 
@@ -2409,7 +2408,7 @@ public class Servlet2 extends HttpServlet {
 }
 ```
 
-### Session
+### 6.13.3 Session
 
 - Session的使用需要Cookie配合
 - Session的存活时间可以在web.xml中设置，如下：
@@ -2422,7 +2421,7 @@ public class Servlet2 extends HttpServlet {
 </session-config> 
 ```
 
-使用示例：
+> **使用示例：**
 
 ```java
 
@@ -2465,9 +2464,9 @@ public class Servlet2 extends HttpServlet {
 }
 ```
 
-## 三大域对象
+## 6.14 三大域对象
 
-### 域对象概述
+### 6.14.1 域对象概述
 
 > 域对象: 一些用于存储数据和传递数据的对象,传递数据不同的范围,我们称之为不同的域,不同的域对象代表不同的域,共享数据的范围也不同
 
@@ -2476,13 +2475,13 @@ public class Servlet2 extends HttpServlet {
 + **会话域**对象是`HttpSession`,传递数据的范围是一次会话之内,可以跨多个请求
 + **应用域**对象是`ServletContext`,传递数据的范围是本应用之内,可以跨多个会话
 
-### 三大域存放的数据
+### 6.14.2 三大域存放的数据
 
 - 请求转发时，请求域可以传递数据，请求域内一般存放**本次请求业务有关的数据**，比如：查询到的所有的部门信息
 - 同一个会话内，不用请求转发，会话域可以传递数据，会话域内一般放**本次会话的客户端有关的数据**，比如：当前客户端登录的用户
 - 同一个app内，不同的客户端，应用域可以传递数据，应用域内一般放**本程序应用有关的数据**，比如：Spring框架的IOC容器
 
-### 三大域的通用API
+### 6.14.3 三大域的通用API
 
 | API                                         | 功能           |
 |---------------------------------------------|--------------|
@@ -2502,9 +2501,9 @@ public class Servlet2 extends HttpServlet {
 
 <img src="https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/14-39-qRHnrO" style="zoom:50%;" />
 
-## Filter过滤器
+## 6.15 Filter过滤器
 
-### 过滤器概述
+### 6.15.1 过滤器概述
 
 - 作用：对目标资源的请求进行过滤
 - 过滤器的实现：分为三步，简单理解，就是以chain.doFilter()为界
@@ -2594,7 +2593,7 @@ public class LoggingFilter implements Filter {
 </filter-mapping>
 ```
 
-### filter生命周期：
+### 6.15.2 filter生命周期：
 
 | 阶段    | 对应方法                                                                                                   | 执行时机     | 执行次数 |
 |-------|--------------------------------------------------------------------------------------------------------|----------|------|
@@ -2603,7 +2602,7 @@ public class LoggingFilter implements Filter {
 | 过滤请求  | void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) | 每次请求     | 多次   |
 | 销毁    | default void destroy()                                                                                 | web应用关闭时 | 1次   |
 
-示例：
+> **示例：**
 ```java
 public class LifeCycleFilter implements Filter {
 	public LifeCycleFilter() {
@@ -2643,7 +2642,7 @@ public class LifeCycleFilter implements Filter {
 </filter-mapping>
 ```
 
-## 过滤器链的使用-FilterChain
+## 6.16 过滤器链的使用-FilterChain
 
 - 过滤链是通过多个过滤器对**同一个资源进行过滤**就会出现
 
@@ -2653,10 +2652,11 @@ public class LifeCycleFilter implements Filter {
 
 ![](https://cdn.jsdelivr.net/gh/Shadow1086/myPicture@master/uPic/2026/04/06/16-56-95Nk0B)
 
-## 6.4 Servlet 请求的分发处理
+
+## 6.17 Servlet 请求的分发处理
 
 - 根据请求的类型：POST/GET，执行不同的功能方法
-- 示例：
+> **示例：**
 
 ```java
 
@@ -2690,10 +2690,27 @@ public void doPost() {
 }
 ```
 
-## 6.5 通过继承 HttpServlet 实现 Servlet 程序
+## 6.18 通过继承 HttpServlet 实现 Servlet 程序
 
 - 一般在实际项目开发中，更常见的是继承 `HttpServlet`
 
 1. 编写一个类去继承 `HttpServlet`
 2. 根据业务需要重写 `doGet()` / `doPost()` 方法
 3. 通过 `web.xml` 或 `@WebServlet` 配置访问地址
+
+## 监听器
+
+- 监听器只监听域对象的相关事件
+
+### 监听器的分类
+
++ web中定义八个监听器接口作为监听器的规范,这八个接口按照不同的标准可以形成不同的分类
+
++ 按监听的对象划分
+    + application域监听器 ServletContextListener  ServletContextAttributeListener
+    + session域监听器 HttpSessionListener  HttpSessionAttributeListener  HttpSessionBindingListener  HttpSessionActivationListener
+    + request域监听器 ServletRequestListener  ServletRequestAttributeListener
++ 按监听的事件分
+    + 域对象的创建和销毁监听器 ServletContextListener   HttpSessionListener   ServletRequestListener
+    + 域对象数据增删改事件监听器 ServletContextAttributeListener  HttpSessionAttributeListener   ServletRequestAttributeListener
+    + 其他监听器  HttpSessionBindingListener  HttpSessionActivationListener  
