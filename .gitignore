@@ -1,6 +1,7 @@
 target/
 /out/
 !.mvn/wrapper/maven-wrapper.jar
+!**/.mvn/wrapper/maven-wrapper.properties
 !**/src/main/**/target/
 !**/src/test/**/target/
 .kotlin
@@ -53,5 +54,4 @@ build/
 
 ### Local Database Config ###
 /00-project/src/main/resources/jdbc.properties
-
-*.properties
+**/jdbc.properties
