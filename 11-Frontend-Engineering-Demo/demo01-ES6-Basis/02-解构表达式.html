@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ES6 - 解构表达式</title>
+	<script>
+		const arr = [11, 22, 33, 44];
+		const [a, b, c, d, e = 10] = arr;
+		console.log("数组解构 =", a, b, c, d, e);
+
+		const person = {
+			name: "张三",
+			age: 18,
+			city: "杭州"
+		};
+		const { name, age, city } = person;
+		console.log("对象解构 =", name, age, city);
+
+		function printUser({ name, age }) {
+			console.log(`函数参数解构 => ${name}, ${age}`);
+		}
+
+		printUser(person);
+	</script>
+</head>
+<body>
+<h1>ES6 - 解构表达式</h1>
+<p>请打开控制台查看数组解构、对象解构和函数参数解构。</p>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ES6 - let、const、模板字符串</title>
+	<script>
+		// 1. let 只在当前块级作用域内有效
+		{
+			let a = 1;
+			var b = 2;
+			console.log("块内 a =", a);
+			console.log("块内 b =", b);
+		}
+		// console.log(a); // a is not defined
+		console.log("块外 b =", b);
+
+		// 2. let 不能重复声明
+		let name = "天真";
+		// let name = '无邪'
+		console.log("name =", name);
+
+		// 3. var 会变量提升，let 不会
+		console.log("var 提升结果 =", test);
+		var test = "test";
+		console.log("var 赋值后 =", test);
+		// console.log(test1)
+		// let test1 = 'test1'
+
+		// 4. let 定义的全局变量不会挂到 window 上
+		var windowsa = 100;
+		let windowsb = 200;
+		console.log("window.windowsa =", window.windowsa);
+		console.log("window.windowsb =", window.windowsb);
+
+		// 5. 循环中推荐使用 let
+		// for (let i = 0; i < 10; i++) {
+		// 	// ...
+		// }
+		// console.log(i);
+
+		// 6. const 不能重新赋值，但对象内部数据仍然可以变
+		const b = 10;
+		const PI = 3.14;
+		const teachers = ["张", "王", "李"];
+		teachers.push("陈");
+		console.log("b =", b);
+		console.log("PI =", PI);
+		console.log("teachers =", teachers);
+
+		// 7. 模板字符串
+		let username = "张三";
+		let string = `${username}，你好`;
+		let stringLines = `
+		hello
+		${username}`;
+		console.log("模板字符串 =", string);
+		console.log("多行模板字符串 =", stringLines);
+	</script>
+</head>
+<body>
+<h1>ES6 - let、const、模板字符串</h1>
+<p>请打开控制台查看输出。</p>
+</body>
+</html>
