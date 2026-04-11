@@ -1,31 +1,75 @@
 <script setup lang="ts">
 
 import axios from "axios";
+import {reactive} from "vue";
+import request from './axios.ts';
 
-function getMessage(){
-    // 使用axios发送请求获取
-    //    axios({设置请求的参数})  请求三要素：1. 请求的URL 2. 请求的方式 3.请求的参数 keyvalue json
+type Historyitem = {
+    date: string;
+    title: string;
+}
+let message = reactive({
+    list: [] as Historyitem[]
+})
 
-    let promise = axios({
-        method:"get",
-        url:"https://api.oick.cn/api/dog",
-        data:{
-            // 如果请求方式是get,则data中的数据回忆键值对形式放在url后面
-            // 如果请求方式是post,则data中的数据回忆JSON形式放入请求体
-            apikey:'2f35110e13021186394787624629e837'
+function getWords() {
+    // 发送get请求的方法,返回promise对象
+    // axios.get(url,{params:{键值对参数},header:{设置一些特殊的请求头}})
+    return request.get("https://api.oick.cn/api/lishi", {
+        params: {
+            apikey: '5a03e0d32aa097919419a560842c0ce4'
+        }, headers: {
+            Accept: "application/json,text/plain,text/html"
         }
     })
-    promise.then((response)=>{
-        console.log(response)
-    }).catch(()=>{
+}
 
-    })
+
+async function getMessage() {
+    let response = await getWords();
+
+    Object.assign(message, {
+                list: response.data.result
+            }
+    )
 }
 </script>
 
 <template>
-    <div>
-        <h1></h1>
+    <div class="page">
+        <h1>历史上的今天</h1>
+        <div class="table">
+            <div>日期</div>
+            <div>事件</div>
+            <template class="field" v-for="item in message.list">
+                <div>{{ item.date }}</div>
+                <div>{{ item.title }}</div>
+            </template>
+        </div>
         <button @click="getMessage()">change</button>
     </div>
 </template>
+<style scoped>
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.table {
+    display: grid;
+    grid-template-columns: 200px 300px;
+    gap: 10px 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.table template {
+    border-bottom: 1px solid #9ca3af;
+}
+
+button {
+    margin-top: 20px;
+}
+</style>
