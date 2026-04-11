@@ -1,0 +1,40 @@
+<template>
+    <div class="person">
+        <h1>情况一：监视[ref]定义的[基本类型]数据</h1>
+        <h2>当前 sum = {{sum}}</h2>
+        <button @click="sumAddOne">点击sum+1</button>
+    </div>
+</template>
+
+
+<script lang="ts" name="Person" setup>
+    import {ref,watch} from "vue";
+
+    let sum = ref(0);
+
+    function sumAddOne(){
+        sum.value++;
+    }
+    //监视,返回的是一个监视停止的函数
+    const stopWatch = watch(sum,(newValue,oldValue)=>{
+        console.log('sum变化了',newValue,oldValue);
+        if(sum.value>=10){
+            stopWatch();
+        }
+    })
+
+</script>
+
+<style scoped>
+.person {
+    background-color: skyblue;
+    box-shadow: 0 0 10px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+li {
+    font-size: 20px;
+}
+
+</style>
