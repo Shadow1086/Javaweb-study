@@ -56,3 +56,10 @@ build/
 ### Local Database Config ###
 /00-project/src/main/resources/jdbc.properties
 **/jdbc.properties
+
+### Vue / Vite ###
+**/.vite/
+**/coverage/
+**/*.tsbuildinfo
+**/.env.local
+**/.env.*.local
