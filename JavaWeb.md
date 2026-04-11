@@ -2798,19 +2798,3 @@ public void doPost() {
   // 本次响应的数据
 }
 ```
-
-## 前端工程化
-
-- 当前资料入口：`docs/FrontendEngineering.md`
-- 当前示例目录：`11-Frontend-Engineering-Demo`
-
-建议按这个顺序学习：
-
-1. `demo01-ES6-Basis`
-   - 先学 `let`、`const`、解构、拷贝、ES Module
-2. `demo02-NPM-Basis`
-   - 再学 `package.json`、`scripts`、依赖管理
-3. 再进入构建工具
-   - 例如 Vite、Webpack、Babel
-
-这一章先把“模块化”和“npm 在项目里干什么”搞明白，后面的工程化工具才不会只剩背命令。
