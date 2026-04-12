@@ -3,10 +3,8 @@ package com.practice.dao.Impl;
 import com.practice.dao.SysScheduleDao;
 import com.practice.pojo.SysSchedule;
 import com.practice.util.DBUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

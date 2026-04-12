@@ -132,8 +132,8 @@ async function register() {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    transform: translateY(-180px);
+    //height: 100vh;
+    //transform: translateY(-180px);
 }
 
 /*   #endregion   */

@@ -16,6 +16,8 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Package: com.practice.controller
@@ -106,18 +108,24 @@ public class SysUserController extends BaseController {
 		Result result = Result.ok(null);
 		if (userData == null) {
 			result = Result.build(null,ResultCodeEnum.USERNAME_ERROR);
-			resp.sendRedirect("/loginUserError.html");
+//			resp.sendRedirect("/loginUserError.html");
 		} else {
 			if (PasswordUtil.matches(user.getUserPwd(), userData.getUserPwd())) {
 //				// 登录成功后，将登录的用户信息放入session域
 //				HttpSession session = req.getSession();
 //				session.setAttribute("sysUser", userData);
-				result = Result.ok(null);
+
+				// 登录成功，将用户的uid和username响应给客户端
+				Map data = new HashMap();
+				userData.setUserPwd("");
+				data.put("loginUser",userData);
+
+				result = Result.ok(data);
 //				// 登录成功，用户名密码正确
 //				resp.sendRedirect("/showSchedule.html");
 			} else {
 				result = Result.build(null,ResultCodeEnum.PASSWORD_ERROR);
-				resp.sendRedirect("/loginUserPwdError.html");
+//				resp.sendRedirect("/loginUserPwdError.html");
 			}
 		}
 		// 将登录结果相应给客户端

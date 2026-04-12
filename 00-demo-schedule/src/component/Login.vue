@@ -2,7 +2,9 @@
 import {reactive, ref} from "vue";
 import {useRouter} from "vue-router";
 import request from "../util/request.ts";
+import {definedUser} from "../store/userStore.ts";
 
+let sysUser = definedUser();
 
 const loginUser = reactive({
     username: "",
@@ -32,7 +34,7 @@ function verifyUsername() {
 }
 
 function verifyPwd() {
-    const patternPwd = /^[?=.*_][A-Za-z0-9_]{5,10}$/;
+    const patternPwd = /^(?=.*_)[A-Za-z0-9_]{5,10}$/;
     if (loginUser.userPwd != "") {
         if (patternPwd.test(loginUser.userPwd)) {
             infoPwd.value = "密码格式正确";
@@ -53,6 +55,9 @@ async function login() {
             alert("密码有误")
         } else if (data.code === 200) {
             alert("登录成功")
+            // 获取登录的用户信息，更新到pinia中
+            sysUser.uid =  data.data.loginUser.uid
+            sysUser.username =  data.data.loginUser.username
             // 进行跳转
             router.push("showSchedule")
         } else {
@@ -102,8 +107,8 @@ async function login() {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: 100vh;
-    transform: translateY(-140px);
+    //height: 100vh;
+    //transform: translateY(-140px);
 }
 
 /* #endregion end */
