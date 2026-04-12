@@ -22,6 +22,10 @@ function verifyPwd(){
     infoPwd.value = patternPwd.test(password.value)?"密码格式正确":"密码格式不正确"
 }
 
+function login(){
+
+}
+
 </script>
 
 <template>

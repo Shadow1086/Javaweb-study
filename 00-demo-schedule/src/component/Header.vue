@@ -7,6 +7,7 @@
         <div class="welcome">
             欢迎使用长空日程管理系统
         </div>
+
         <div class="optionDiv">
             <router-link to="login">
                 <button>登录</button>
@@ -31,7 +32,6 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    //justify-content: center;
     align-items: center;
     gap: 10px;
 }
