@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {useRouter} from "vue-router";
+import request from "../util/request.ts";
 
-let username = ref();
-let password = ref();
+
+const loginUser = reactive({
+    username: "",
+    userPwd: ""
+})
+
 let infoUsername = ref()
 let infoPwd = ref();
 
@@ -15,15 +20,45 @@ function register() {
 
 function verifyUsername() {
     const patternUser = /^[A-Za-z0-9]{5,10}$/;
-    infoUsername.value = patternUser.test(username.value) ? "用户名格式正确" : "用户名格式不正确";
-}
-function verifyPwd(){
-    const patternPwd=/^[?=.*_][A-Za-z0-9_]{5,10}$/;
-    infoPwd.value = patternPwd.test(password.value)?"密码格式正确":"密码格式不正确"
+    if (loginUser.username !== "") {
+        if (patternUser.test(loginUser.username)) {
+            infoUsername.value = "用户名格式正确";
+            return true;
+        } else {
+            infoUsername.value = "用户名格式不正确"
+        }
+        return false;
+    }
 }
 
-function login(){
+function verifyPwd() {
+    const patternPwd = /^[?=.*_][A-Za-z0-9_]{5,10}$/;
+    if (loginUser.userPwd != "") {
+        if (patternPwd.test(loginUser.userPwd)) {
+            infoPwd.value = "密码格式正确";
+            return true;
+        } else {
+            infoPwd.value = "密码格式不正确";
+        }
+        return false;
+    }
+}
 
+async function login() {
+    if (verifyPwd() && verifyUsername()) {
+        let {data} = await request.post("/user/login", loginUser);
+        if (data.code === 501) {
+            alert("用户名有误")
+        } else if (data.code === 503) {
+            alert("密码有误")
+        } else if (data.code === 200) {
+            alert("登录成功")
+            // 进行跳转
+            router.push("showSchedule")
+        } else {
+            alert("未知错误")
+        }
+    }
 }
 
 </script>
@@ -37,17 +72,17 @@ function login(){
         <form action="">
             <label for="username">用户名：</label>
             <div class="field">
-                <input type="text" id="username" v-model="username" @blur="verifyUsername">
-                <span class="status">{{infoUsername}}</span>
+                <input type="text" id="username" v-model="loginUser.username" @blur="verifyUsername">
+                <span class="status">{{ infoUsername }}</span>
             </div>
             <label for="username">密码：</label>
             <div class="field">
-                <input type="text" id="password" v-model="password" @blur="verifyPwd()">
-                <span class="status">{{infoPwd}}</span>
+                <input type="text" id="password" v-model="loginUser.userPwd" @blur="verifyPwd()">
+                <span class="status">{{ infoPwd }}</span>
             </div>
         </form>
         <div class="btnList">
-            <button @click="">登录</button>
+            <button @click="login">登录</button>
             <button @click="register">去注册</button>
             <button @click="">重置</button>
         </div>
@@ -113,12 +148,14 @@ form input {
     box-sizing: border-box;
     width: 180px;
 }
+
 .field {
     display: flex;
     gap: 3px;
     align-items: center;
     justify-items: center;
 }
+
 .status {
     font-size: 10px;
     color: #888;

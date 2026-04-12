@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import tools.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
@@ -36,24 +37,45 @@ public class SysUserController extends BaseController {
 	 * @throws IOException
 	 */
 	protected void regist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 1, 接受客户端提交的参数
-		String username = req.getParameter("username");
-		String password = req.getParameter("user-pwd");
-		String passwordCon = req.getParameter("user-conpwd");
-		// 将参数放入一个SysUser对象中，在调用方法传入
-		if (!passwordCon.equals(password)) {
-			resp.sendRedirect("/registerFail.html");
-			return;
+		// 接受前端的JSON串，转换成User对象
+		BufferedReader reader = req.getReader();
+		StringBuffer buffer = new StringBuffer();
+		String line = reader.readLine();
+		while (line != null) {
+			buffer.append(line);
+			line = reader.readLine();
 		}
-		SysUser user = new SysUser(null, username, password);
+		ObjectMapper mapper = new ObjectMapper();
+		SysUser sysUser = mapper.readValue(buffer.toString(), SysUser.class);
 		// 2. 调用服务层方法，完成注册功能
-		int rows = service.regist(user);
-		if (rows > 0) {
-			resp.sendRedirect("/registerSuccess.html");
-		} else {
-			resp.sendRedirect("/registerFail.html");
+		int rows = service.regist(sysUser);
+
+		Result<Object> result = Result.ok(null);
+		if (rows < 1) {
+			result = Result.build(null,ResultCodeEnum.USERNAME_USED);
 		}
+
+		WebUtil.writejson(resp,result);
+
 		// 3. 根据注册结果，做页面跳转
+
+
+//		// 1, 接受客户端提交的参数
+//		String username = req.getParameter("username");
+//		String password = req.getParameter("user-pwd");
+//		String passwordCon = req.getParameter("user-conpwd");
+//		// 将参数放入一个SysUser对象中，在调用方法传入
+//		if (!passwordCon.equals(password)) {
+//			resp.sendRedirect("/registerFail.html");
+//			return;
+//		}
+//		SysUser user = new SysUser(null, username, password);
+		//		if (rows > 0) {
+//			resp.sendRedirect("/registerSuccess.html");
+//		} else {
+//			resp.sendRedirect("/registerFail.html");
+//		}
+
 	}
 
 
@@ -66,23 +88,40 @@ public class SysUserController extends BaseController {
 	 * @throws IOException
 	 */
 	protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-		SysUser userData = service.findByUsername(username);
+//		String username = req.getParameter("username");
+//		String password = req.getParameter("password");
+//		SysUser userData = service.findByUsername(username);
+		BufferedReader reader = req.getReader();
+		StringBuffer buffer = new StringBuffer();
+		String line = reader.readLine();
+		while(line!=null){
+			buffer.append(line);
+			line=reader.readLine();
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		// 用户登录的账号密码
+		SysUser user = mapper.readValue(buffer.toString(), SysUser.class);
+		// 数据库中查询出来的用户
+		SysUser userData = service.findByUsername(user.getUsername());
+		Result result = Result.ok(null);
 		if (userData == null) {
+			result = Result.build(null,ResultCodeEnum.USERNAME_ERROR);
 			resp.sendRedirect("/loginUserError.html");
 		} else {
-			SysUser user = new SysUser(null, username, password);
-			if (PasswordUtil.matches(password, userData.getUserPwd())) {
-				// 登录成功后，将登录的用户信息放入session域
-				HttpSession session = req.getSession();
-				session.setAttribute("sysUser", userData);
-				// 登录成功，用户名密码正确
-				resp.sendRedirect("/showSchedule.html");
+			if (PasswordUtil.matches(user.getUserPwd(), userData.getUserPwd())) {
+//				// 登录成功后，将登录的用户信息放入session域
+//				HttpSession session = req.getSession();
+//				session.setAttribute("sysUser", userData);
+				result = Result.ok(null);
+//				// 登录成功，用户名密码正确
+//				resp.sendRedirect("/showSchedule.html");
 			} else {
+				result = Result.build(null,ResultCodeEnum.PASSWORD_ERROR);
 				resp.sendRedirect("/loginUserPwdError.html");
 			}
 		}
+		// 将登录结果相应给客户端
+		WebUtil.writejson(resp,result);
 	}
 
 	/**
@@ -100,6 +139,6 @@ public class SysUserController extends BaseController {
 		}
 		// 将result对象转换为JSON串响应给客户端
 		// ObjectMapper
-		WebUtil.writejson(resp,result);
+		WebUtil.writejson(resp, result);
 	}
 }
