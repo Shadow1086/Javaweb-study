@@ -4,10 +4,10 @@
 import {createRouter, createWebHistory} from "vue-router";
 
 // 引入一个个可能要呈现的组件
-import Home from '@/components/Home.vue'
-import News from "@/components/News.vue";
-import About from "@/components/About.vue";
-import Detail from "@/components/Detail.vue";
+import Home from '../components/Home.vue'
+import News from "../components/News.vue";
+import About from "../components/About.vue";
+import Detail from "../components/Detail.vue";
 
 const router = createRouter({
 	history:createWebHistory(), //路由器的工作模式
