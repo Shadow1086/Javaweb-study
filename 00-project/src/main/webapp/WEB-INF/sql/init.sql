@@ -37,3 +37,16 @@ INSERT INTO `sys_user`
 VALUES (2, 'lisi', 'e10adc3949ba59abbe56e057f20f883e');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+INSERT INTO sys_schedule (uid, title, completed) VALUES
+                                                     (3, '完成登录页面', 0),
+                                                     (3, '完善注册校验', 1),
+                                                     (3, '学习Vue路由', 0),
+                                                     (3, '整理Axios用法', 0),
+                                                     (3, '编写日程查询', 1),
+                                                     (5, '完成日程新增', 0),
+                                                     (5, '完成日程修改', 0),
+                                                     (5, '完成日程删除', 1),
+                                                     (5, '优化页面布局', 0),
+                                                     (5, '整理学习笔记', 1);
