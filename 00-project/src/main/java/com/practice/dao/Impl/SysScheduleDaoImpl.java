@@ -44,7 +44,6 @@ public class SysScheduleDaoImpl implements SysScheduleDao {
 				SELECT * FROM sys_schedule WHERE sid = ?
 				""";
 		return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(SysSchedule.class), sid);
-
 	}
 
 	/**
@@ -65,15 +64,15 @@ public class SysScheduleDaoImpl implements SysScheduleDao {
 	/**
 	 * 添加日程信息
 	 *
-	 * @param sysSchedule 日程信息
+	 * @param uid 日程所属用户id
 	 * @return int
 	 */
 	@Override
-	public int addSchedule(SysSchedule sysSchedule) {
+	public int addSchedule(Integer uid) {
 		String sql = """
-				INSERT INTO sys_schedule VALUES (?,?,?,?);
+				INSERT INTO sys_schedule VALUES (DEFAULT,?,'请输入日程',0)
 				""";
-		return jdbcTemplate.update(sql, sysSchedule.getSid(), sysSchedule.getUid(), sysSchedule.getTitle(), sysSchedule.getCompleted());
+		return jdbcTemplate.update(sql,uid);
 	}
 
 	/**
@@ -103,5 +102,17 @@ public class SysScheduleDaoImpl implements SysScheduleDao {
 				DELETE FROM sys_schedule WHERE sid = ? AND uid = ?;
 				""";
 		return jdbcTemplate.update(sql, sid, uid);
+	}
+
+	/**
+	 * @param sid   要删除的日程sid
+	 * @return      返回受影响的行数
+	 */
+	@Override
+	public Integer deleteBySid(Integer sid) {
+		String sql = """
+				Delete from sys_schedule where sid = ?
+				""";
+		return jdbcTemplate.update(sql,sid);
 	}
 }

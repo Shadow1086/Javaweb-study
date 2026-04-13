@@ -9,7 +9,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import tools.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,38 @@ public class SysScheduleController extends BaseController {
 
 		Result<Map> result = Result.ok(data);
 		// 将Result对象转换为JSON相应给客户端
+		WebUtil.writejson(resp,result);
+	}
+
+	protected void deleteScheduleBySid(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int sid = Integer.parseInt(req.getParameter("sid"));
+		service.deleteSchedule(sid);
+		WebUtil.writejson(resp,Result.ok(null));
+	}
+
+
+	protected void addSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int uid = Integer.parseInt(req.getParameter("uid"));
+		service.addSchedule(uid);
+
+		Result result = Result.ok(null);
+		WebUtil.writejson(resp,result);
+	}
+
+	protected void updateSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 接收请求体中的JSON串，转换成一个sysSchedule
+		BufferedReader reader = req.getReader();
+		String line = reader.readLine();
+		StringBuffer buffer = new StringBuffer();
+		while(line!=null){
+			buffer.append(line);
+			line = reader.readLine();
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		SysSchedule sysSchedule = mapper.readValue(buffer.toString(), SysSchedule.class);
+		// 调用服务层处理数据
+		Integer rows = service.updateSchedule(sysSchedule);
+		Result result = Result.ok(null);
 		WebUtil.writejson(resp,result);
 	}
 }

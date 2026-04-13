@@ -1,5 +1,6 @@
 package com.practice.service;
 
+import com.practice.controller.SysScheduleController;
 import com.practice.pojo.SysSchedule;
 
 import java.util.HashMap;
@@ -14,4 +15,13 @@ import java.util.List;
  */
 public interface SysScheduleService {
 	List<SysSchedule> findItemListByUid(Integer uid);
+
+
+	Integer addSchedule(Integer uid);
+
+	Integer updateSchedule(SysSchedule schedule);
+
+//	SysSchedule findItemBySid(Integer sid);
+
+	Integer deleteSchedule(Integer sid);
 }

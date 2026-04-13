@@ -16,10 +16,10 @@ public interface SysScheduleDao {
 	/**
 	 *  添加日程信息
 	 *
-	 * @param sysSchedule   日程信息
+	 * @param uid   日程所属用户id
 	 * @return int
 	 */
-	int addSchedule(SysSchedule sysSchedule);
+	int addSchedule(Integer uid);
 
 	/**
 	 *  输入用户的uid获取日程信息
@@ -64,4 +64,6 @@ public interface SysScheduleDao {
 	 */
 	int deleteBySidAndUid(Integer sid, Integer uid);
 
+
+	Integer deleteBySid(Integer sid);
 }

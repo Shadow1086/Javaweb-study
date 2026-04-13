@@ -27,4 +27,33 @@ public class SysScheduleServiceImpl implements SysScheduleService {
 	public List<SysSchedule> findItemListByUid(Integer uid) {
 		return dao.findListByUid(uid);
 	}
+
+	/**
+	 *
+	 *
+	 * @param sid       要删除的日程的sid
+	 * @return {@link Integer }
+	 */
+	@Override
+	public Integer deleteSchedule(Integer sid){
+		return dao.deleteBySid(sid);
+	}
+
+	/**
+	 * @param uid   用户id
+	 * @return      影响的行数
+	 */
+	@Override
+	public Integer addSchedule(Integer uid) {
+		return dao.addSchedule(uid);
+	}
+
+	/**
+	 * @param schedule
+	 * @return
+	 */
+	@Override
+	public Integer updateSchedule(SysSchedule schedule) {
+		return dao.updateSchedule(schedule);
+	}
 }
