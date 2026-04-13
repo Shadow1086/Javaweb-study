@@ -23,5 +23,7 @@ public interface SysScheduleService {
 
 //	SysSchedule findItemBySid(Integer sid);
 
+	Integer deleteBySidAndUid(Integer sid, Integer uid);
+
 	Integer deleteSchedule(Integer sid);
 }

@@ -4,17 +4,16 @@
 
 import {defineStore} from "pinia";
 
+interface UserState {
+	uid: number,
+	username: string
+}
+
 export const definedUser = defineStore('userStore', {
-	state: () => {
-		return {
-			uid:0,
-			username:""
-		}
-	},
-	getters:{
-
-	},
-	actions:{
-
-	}
+	state: (): UserState => ({
+		uid: 0,
+		username: ""
+	}),
+	getters: {},
+	actions: {}
 })

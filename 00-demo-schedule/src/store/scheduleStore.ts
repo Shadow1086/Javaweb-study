@@ -4,21 +4,19 @@
 
 import {defineStore} from "pinia";
 
+interface ScheduleItem {
+	sid: number,
+	uid: number,
+	title: string,
+	completed: 0 | 1
+}
+
+interface ScheduleState {
+	itemList: ScheduleItem[]
+}
+
 export const definedSchedule = defineStore("scheduleList", {
-	state: () => {
-		return {
-			itemList: [
-				{
-					sid: 1,
-					uid: 1,
-					title: '学习JAVA',
-					completed: 0
-				}
-			]
-		}
-	}, getters: {
-
-	}, actions: {
-
-	}
+	state: (): ScheduleState => ({
+		itemList:[]
+	}), getters: {}, actions: {}
 })

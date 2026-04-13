@@ -2,6 +2,8 @@ package com.practice.controller;
 
 import com.practice.common.Result;
 import com.practice.pojo.SysSchedule;
+import com.practice.pojo.SysUser;
+import com.practice.pojo.vo.ScheduleListVO;
 import com.practice.service.Impl.SysScheduleServiceImpl;
 import com.practice.service.SysScheduleService;
 import com.practice.util.WebUtil;
@@ -9,13 +11,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import tools.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Package: com.practice.controller
@@ -31,25 +32,43 @@ import java.util.Map;
  */
 @WebServlet("/schedule/*")
 public class SysScheduleController extends BaseController {
-	private SysScheduleService service = new SysScheduleServiceImpl() ;
+	private final SysScheduleService service = new SysScheduleServiceImpl();
+
+	/**
+	 * 查询用户的所有日程信息
+	 *
+	 * @param req  请求
+	 * @param resp 响应
+	 */
 	protected void findAllSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 接收请求中的uid参数
 		int uid = Integer.parseInt(req.getParameter("uid"));
 		// 查询用户的所有日程
 		List<SysSchedule> itemList = service.findItemListByUid(uid);
 		// 将用唬得所有日程放入一个Result对象
-		Map data = new HashMap();
-		data.put("itemList",itemList);
+//		Map data = new HashMap();
+//		data.put("itemList",itemList);
+		Result<ScheduleListVO> result = Result.ok(new ScheduleListVO(itemList));
 
-		Result<Map> result = Result.ok(data);
+//		Result<Map> result = Result.ok(data);
+
 		// 将Result对象转换为JSON相应给客户端
-		WebUtil.writejson(resp,result);
+		WebUtil.writejson(resp, result);
 	}
 
+	/**
+	 * 删除用户的日程信息
+	 *
+	 * @param req  请求
+	 * @param resp 响应
+	 */
 	protected void deleteScheduleBySid(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int sid = Integer.parseInt(req.getParameter("sid"));
-		service.deleteSchedule(sid);
-		WebUtil.writejson(resp,Result.ok(null));
+		HttpSession session = req.getSession();
+		SysUser user = (SysUser) session.getAttribute("sysUser");
+		Integer uid = user.getUid();
+		service.deleteBySidAndUid(sid, uid);
+		WebUtil.writejson(resp, Result.ok(null));
 	}
 
 
@@ -57,8 +76,7 @@ public class SysScheduleController extends BaseController {
 		int uid = Integer.parseInt(req.getParameter("uid"));
 		service.addSchedule(uid);
 
-		Result result = Result.ok(null);
-		WebUtil.writejson(resp,result);
+		WebUtil.writejson(resp, Result.ok(null));
 	}
 
 	protected void updateSchedule(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,7 +84,7 @@ public class SysScheduleController extends BaseController {
 		BufferedReader reader = req.getReader();
 		String line = reader.readLine();
 		StringBuffer buffer = new StringBuffer();
-		while(line!=null){
+		while (line != null) {
 			buffer.append(line);
 			line = reader.readLine();
 		}
@@ -74,7 +92,6 @@ public class SysScheduleController extends BaseController {
 		SysSchedule sysSchedule = mapper.readValue(buffer.toString(), SysSchedule.class);
 		// 调用服务层处理数据
 		Integer rows = service.updateSchedule(sysSchedule);
-		Result result = Result.ok(null);
-		WebUtil.writejson(resp,result);
+		WebUtil.writejson(resp, Result.ok(null));
 	}
 }

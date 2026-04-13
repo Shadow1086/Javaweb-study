@@ -56,4 +56,14 @@ public class SysScheduleServiceImpl implements SysScheduleService {
 	public Integer updateSchedule(SysSchedule schedule) {
 		return dao.updateSchedule(schedule);
 	}
+
+	/**
+	 * @param sid   用户的sid
+	 * @param uid   日程的sid
+	 * @return      返回受影响的行数
+	 */
+	@Override
+	public Integer deleteBySidAndUid(Integer sid, Integer uid) {
+		return dao.deleteBySidAndUid(sid,uid);
+	}
 }

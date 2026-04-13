@@ -33,15 +33,13 @@ public class SysUserController extends BaseController {
 	/**
 	 * 接受用户注册请求的业务处理方法(业务接口，不是interface)
 	 *
-	 * @param req
-	 * @param resp
-	 * @throws ServletException
-	 * @throws IOException
+	 * @param req       请求
+	 * @param resp      响应
 	 */
 	protected void regist(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 接受前端的JSON串，转换成User对象
 		BufferedReader reader = req.getReader();
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		String line = reader.readLine();
 		while (line != null) {
 			buffer.append(line);
@@ -58,43 +56,16 @@ public class SysUserController extends BaseController {
 		}
 
 		WebUtil.writejson(resp,result);
-
-		// 3. 根据注册结果，做页面跳转
-
-
-//		// 1, 接受客户端提交的参数
-//		String username = req.getParameter("username");
-//		String password = req.getParameter("user-pwd");
-//		String passwordCon = req.getParameter("user-conpwd");
-//		// 将参数放入一个SysUser对象中，在调用方法传入
-//		if (!passwordCon.equals(password)) {
-//			resp.sendRedirect("/registerFail.html");
-//			return;
-//		}
-//		SysUser user = new SysUser(null, username, password);
-		//		if (rows > 0) {
-//			resp.sendRedirect("/registerSuccess.html");
-//		} else {
-//			resp.sendRedirect("/registerFail.html");
-//		}
-
 	}
 
 
 	/**
 	 * 完成用户登录时的业务接口
 	 *
-	 * @param req
-	 * @param resp
-	 * @throws ServletException
-	 * @throws IOException
 	 */
 	protected void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		String username = req.getParameter("username");
-//		String password = req.getParameter("password");
-//		SysUser userData = service.findByUsername(username);
 		BufferedReader reader = req.getReader();
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		String line = reader.readLine();
 		while(line!=null){
 			buffer.append(line);
@@ -108,24 +79,20 @@ public class SysUserController extends BaseController {
 		Result result = Result.ok(null);
 		if (userData == null) {
 			result = Result.build(null,ResultCodeEnum.USERNAME_ERROR);
-//			resp.sendRedirect("/loginUserError.html");
 		} else {
 			if (PasswordUtil.matches(user.getUserPwd(), userData.getUserPwd())) {
-//				// 登录成功后，将登录的用户信息放入session域
-//				HttpSession session = req.getSession();
-//				session.setAttribute("sysUser", userData);
+				// 登录成功后，将登录的用户信息放入session域
+				HttpSession session = req.getSession();
+				session.setAttribute("sysUser", userData);
 
-				// 登录成功，将用户的uid和username响应给客户端
-				Map data = new HashMap();
+				// 登录成功，将用户的 uid 和 username 响应给客户端
+				Map<String,SysUser> data = new HashMap<String,SysUser>();
 				userData.setUserPwd("");
 				data.put("loginUser",userData);
 
 				result = Result.ok(data);
-//				// 登录成功，用户名密码正确
-//				resp.sendRedirect("/showSchedule.html");
 			} else {
 				result = Result.build(null,ResultCodeEnum.PASSWORD_ERROR);
-//				resp.sendRedirect("/loginUserPwdError.html");
 			}
 		}
 		// 将登录结果相应给客户端

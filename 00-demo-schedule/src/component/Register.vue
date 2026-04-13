@@ -48,7 +48,7 @@ function verifyPwd() {
 }
 
 function verifyPwdCon() {
-    if (statusPwdCon.value === undefined) {
+    if (registerUser.userPwd === undefined || registerUser.userPwd === "") {
         statusPwdCon.value = "密码不能为空";
     } else if (registerUser.userPwd === passwordCon.value) {
         statusPwdCon.value = "密码正确";

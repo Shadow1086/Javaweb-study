@@ -67,9 +67,6 @@ async function keepUpdate(index: number) {
 
 <template>
     <div class="page">
-        <div class="header">
-            欢迎使用日程管理系统
-        </div>
         <div class="welcome">您的日程如下：</div>
         <div class="content">
             <div class="table-head-row">
@@ -82,7 +79,7 @@ async function keepUpdate(index: number) {
             <div
                     class="table-row"
                     v-for="(item,index) in schedule.itemList"
-                    :key="index"
+                    :key="item.sid"
                     :class="{striped:index%2 ===1}"
             >
                 <div class="table-cell" v-text="index+1"></div>
@@ -91,10 +88,10 @@ async function keepUpdate(index: number) {
                 </div>
                 <div class="table-cell-radio">
                     <label>
-                        <input type="radio" value="1" v-model="item.completed">已完成
+                        <input type="radio" :value="1" v-model="item.completed">已完成
                     </label>
                     <label>
-                        <input type="radio" value="0" v-model="item.completed">未完成
+                        <input type="radio" :value="0" v-model="item.completed">未完成
                     </label>
                 </div>
                 <div class="field-btn-list">
@@ -225,10 +222,13 @@ async function keepUpdate(index: number) {
 }
 
 .field-btn-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
 
 .field-btn-list button {
+    width: 100%;
     min-width: 76px;
     height: 34px;
     padding: 0 12px;
@@ -239,6 +239,11 @@ async function keepUpdate(index: number) {
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
+}
+
+.field-btn-list > button:last-of-type {
+    width: 90px;
+    min-width: 90px;
 }
 
 .field-btn-list button:hover {
